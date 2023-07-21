@@ -16,7 +16,9 @@ To run the example project, clone the repo, and run pod install from the Example
 
 To use TSAdView with the Swift Package Manager, add the following to your Package.swift file.
 
-swift // let package = Package( // ... // dependencies: [ // .package(url: "https://github.com/tsleedev/TSAdView.git", from: "0.1.0"), // ], // ... // ) //
+```swift
+.package(url: "https://github.com/tsleedev/TSAdView.git", .upToNextMajor(from: "0.1.0"))
+```
 
 Replace USERNAME with your GitHub username.
 
@@ -26,17 +28,46 @@ Replace USERNAME with your GitHub username.
 
 Add the following import to the top of the file:
 
-swift // import TSAdView //
+```swift
+import TSAdView
+```
 
 ### Initialize and load the Ad view
 
 Here's an example for how to use it:
 
-swift // func loadAd() { // let types: [TSAdServiceType] = [ // .googleAdManager(params: .init(parentViewController: self, // adUnitID: (/*@START_MENU_TOKEN@*/"Your adUnitID"/*@END_MENU_TOKEN@*/)), // .googleAdMob(params: .init(parentViewController: self, // adUnitID: (/*@START_MENU_TOKEN@*/"Your adUnitID"/*@END_MENU_TOKEN@*/, // adDimension: CGSize(width: 300, height: 400))) // ] // let adView = TSAdView(with: types) { [weak self] ad in // guard let self = self else { return UIView() } // return self.adManagerAdView(ad) // } // adView.load() // self.adContainerView.addSubview(adView) // adView.translatesAutoresizingMaskIntoConstraints = false // NSLayoutConstraint.activate([ // adView.topAnchor.constraint(equalTo: self.adContainerView.topAnchor), // adView.bottomAnchor.constraint(equalTo: self.adContainerView.bottomAnchor), // adView.leadingAnchor.constraint(equalTo: self.adContainerView.leadingAnchor), // adView.trailingAnchor.constraint(equalTo: self.adContainerView.trailingAnchor) // ]) // } //
+```swift
+func loadAd() {
+let types: [TSAdServiceType] = [
+ func adLoad() {
+    let types: [TSAdServiceType] = [
+        .googleAdManager(params: .init(viewController: self,
+                                       adUnitID: /*@START_MENU_TOKEN@*/"Your adUnitID"/*@END_MENU_TOKEN@*/)),
+        .googleAdMob(params: .init(viewController: self,
+//                                       adUnitID: /*@START_MENU_TOKEN@*/"Your adUnitID"/*@END_MENU_TOKEN@*/,
+                                   adDimension: CGSize(width: 300, height: 400)))
+    ]
+    let adView = TSAdView(with: types) { ad in
+        // Create and return your custom UIView here based on the `ad`.
+        // Note: This closure is specifically designed for AdManager.
+        // For AdMob, you don't need to provide a custom UIView.
+        return UIImageView(image: ad.image(forKey: "image")?.image)
+    }
+    adView.load()
+    adViewContainer.addSubview(adView)
+    adView.translatesAutoresizingMaskIntoConstraints = false
+    NSLayoutConstraint.activate([
+        adView.topAnchor.constraint(equalTo: adViewContainer.topAnchor),
+        adView.bottomAnchor.constraint(equalTo: adViewContainer.bottomAnchor),
+        adView.leadingAnchor.constraint(equalTo: adViewContainer.leadingAnchor),
+        adView.trailingAnchor.constraint(equalTo: adViewContainer.trailingAnchor)
+    ])
+}
+```
 
 ## Author
 
-tsleedev, your-email@example.com
+tslee, tslee.dev@gmail.com
 
 ## License
 
