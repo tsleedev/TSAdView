@@ -4,33 +4,31 @@
 import PackageDescription
 
 let package = Package(
-    name: "TSAdManager",
+    name: "TSAdView",
     platforms: [
         .iOS(.v13)
     ],
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
-            name: "TSAdManager",
-            targets: ["TSAdManager"]),
+            name: "TSAdView",
+            targets: ["TSAdView"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/googleads/swift-package-manager-google-mobile-ads.git", .upToNextMajor(from: "9.0.0")),
-        .package(url: "https://github.com/airbnb/lottie-ios.git", .upToNextMajor(from: "4.0.0"))
+        .package(url: "https://github.com/googleads/swift-package-manager-google-mobile-ads.git", .upToNextMajor(from: "10.0.0"))
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
-            name: "TSAdManager",
+            name: "TSAdView",
             dependencies: [
-                .product(name: "GoogleMobileAds", package: "swift-package-manager-google-mobile-ads"),
-                .product(name: "Lottie", package: "lottie-ios")
+                .product(name: "GoogleMobileAds", package: "swift-package-manager-google-mobile-ads")
             ]
         ),
         .testTarget(
-            name: "TSAdManagerTests",
-            dependencies: ["TSAdManager"]
+            name: "TSAdViewTests",
+            dependencies: ["TSAdView"]
         )
     ]
 )

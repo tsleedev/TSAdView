@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Ynu-0I-uv9">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="TSAdManagerUIKitDemo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="1MJ-oR-7kH">
+                                <rect key="frame" x="0.0" y="103" width="393" height="749"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="leN-V5-SI5"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="a6P-tM-aCX"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="1MJ-oR-7kH" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="ChV-y0-4MF"/>
+                            <constraint firstAttribute="bottom" secondItem="1MJ-oR-7kH" secondAttribute="bottom" id="b1F-59-ZJy"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="1MJ-oR-7kH" secondAttribute="trailing" id="csB-SQ-CVM"/>
+                            <constraint firstItem="1MJ-oR-7kH" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="k5g-QI-GBP"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="L27-UC-7hf"/>
+                    <connections>
+                        <outlet property="tableView" destination="1MJ-oR-7kH" id="d4j-82-spg"/>
+                        <segue destination="gyg-hl-lgq" kind="presentation" identifier="AdPopup" modalPresentationStyle="overFullScreen" modalTransitionStyle="crossDissolve" id="hFd-1P-2qY"/>
+                        <segue destination="a8S-On-MIU" kind="show" identifier="AdLottie" id="MuA-Wy-5w6"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1063.3587786259541" y="4.9295774647887329"/>
+        </scene>
+        <!--Ad Manager Lottie View Controller-->
+        <scene sceneID="WPt-e1-1Jg">
+            <objects>
+                <viewController id="a8S-On-MIU" customClass="AdManagerLottieViewController" customModule="TSAdManagerUIKitDemo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="jSZ-Q1-M3h">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P47-zx-ANv" userLabel="AdViewContainer">
+                                <rect key="frame" x="96.666666666666686" y="376" width="200" height="100"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="ThX-bG-FuA"/>
+                                    <constraint firstAttribute="height" constant="100" id="azL-iV-LU0"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jjK-pt-ijL">
+                                <rect key="frame" x="96.666666666666686" y="376" width="200" height="100"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <connections>
+                                    <action selector="clickAd:" destination="a8S-On-MIU" eventType="touchUpInside" id="ZN5-t3-axK"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Zkn-hx-5YF"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="jjK-pt-ijL" firstAttribute="trailing" secondItem="P47-zx-ANv" secondAttribute="trailing" id="6Av-2s-TeC"/>
+                            <constraint firstItem="jjK-pt-ijL" firstAttribute="leading" secondItem="P47-zx-ANv" secondAttribute="leading" id="9Bo-vn-TWO"/>
+                            <constraint firstItem="P47-zx-ANv" firstAttribute="centerX" secondItem="jSZ-Q1-M3h" secondAttribute="centerX" id="QXY-Lg-rxX"/>
+                            <constraint firstItem="jjK-pt-ijL" firstAttribute="bottom" secondItem="P47-zx-ANv" secondAttribute="bottom" id="V7j-SZ-6cC"/>
+                            <constraint firstItem="P47-zx-ANv" firstAttribute="centerY" secondItem="jSZ-Q1-M3h" secondAttribute="centerY" id="ZSF-LZ-4Sn"/>
+                            <constraint firstItem="jjK-pt-ijL" firstAttribute="top" secondItem="P47-zx-ANv" secondAttribute="top" id="dJL-o2-91e"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="xR3-ph-pfn"/>
+                    <connections>
+                        <outlet property="adViewContainer" destination="P47-zx-ANv" id="oTA-gV-py6"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tlm-1T-yCr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2224" y="397"/>
+        </scene>
+        <!--Ad Popup View Controller-->
+        <scene sceneID="NW9-cW-P6O">
+            <objects>
+                <viewController id="gyg-hl-lgq" customClass="AdPopupViewController" customModule="TSAdManagerUIKitDemo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="sGs-mh-ihB">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bbm-ur-Mfp" userLabel="AdContainer">
+                                <rect key="frame" x="46.666666666666657" y="204" width="300" height="444"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aYN-xe-fed" userLabel="AdViewContainer">
+                                        <rect key="frame" x="0.0" y="0.0" width="300" height="400"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="400" id="026-qq-8wK"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1ZC-3V-2Ul" userLabel="ButtonView">
+                                        <rect key="frame" x="0.0" y="400" width="300" height="44"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lnd-H2-f4W">
+                                                <rect key="frame" x="200" y="0.0" width="100" height="44"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="100" id="QVI-9o-OqB"/>
+                                                </constraints>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain" title="Close">
+                                                    <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </buttonConfiguration>
+                                                <connections>
+                                                    <action selector="close:" destination="gyg-hl-lgq" eventType="touchUpInside" id="ToL-jx-ybl"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="Lnd-H2-f4W" secondAttribute="trailing" id="Ijg-8G-AeP"/>
+                                            <constraint firstAttribute="bottom" secondItem="Lnd-H2-f4W" secondAttribute="bottom" id="Mls-wq-m3z"/>
+                                            <constraint firstAttribute="height" constant="44" id="nnC-cP-q3Z"/>
+                                            <constraint firstItem="Lnd-H2-f4W" firstAttribute="top" secondItem="1ZC-3V-2Ul" secondAttribute="top" id="pba-zc-URH"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="1ZC-3V-2Ul" secondAttribute="trailing" id="0a3-tH-hPV"/>
+                                    <constraint firstAttribute="height" constant="444" id="9zF-L3-TjP"/>
+                                    <constraint firstItem="aYN-xe-fed" firstAttribute="top" secondItem="Bbm-ur-Mfp" secondAttribute="top" id="BLV-6R-z7V"/>
+                                    <constraint firstAttribute="bottom" secondItem="1ZC-3V-2Ul" secondAttribute="bottom" id="SoW-vX-Ofi"/>
+                                    <constraint firstItem="1ZC-3V-2Ul" firstAttribute="top" secondItem="aYN-xe-fed" secondAttribute="bottom" id="bDq-S4-sqe"/>
+                                    <constraint firstItem="aYN-xe-fed" firstAttribute="leading" secondItem="Bbm-ur-Mfp" secondAttribute="leading" id="d2s-Oo-tLl"/>
+                                    <constraint firstItem="1ZC-3V-2Ul" firstAttribute="leading" secondItem="Bbm-ur-Mfp" secondAttribute="leading" id="hlV-vC-eok"/>
+                                    <constraint firstAttribute="trailing" secondItem="aYN-xe-fed" secondAttribute="trailing" id="lNV-MF-fhT"/>
+                                    <constraint firstAttribute="width" constant="300" id="ztS-x3-a26"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="04e-fK-Ldn"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Bbm-ur-Mfp" firstAttribute="centerX" secondItem="sGs-mh-ihB" secondAttribute="centerX" id="Lhb-32-HQy"/>
+                            <constraint firstItem="Bbm-ur-Mfp" firstAttribute="centerY" secondItem="sGs-mh-ihB" secondAttribute="centerY" id="SQO-xa-Lg8"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="adViewContainer" destination="aYN-xe-fed" id="qSA-wf-rLC"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ryf-Ig-XPd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2224" y="-323"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="8fu-S7-sNu">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Ynu-0I-uv9" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="deg-VA-dUq">
+                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="3ba-Ty-fon"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7Eq-el-aFH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="136.64122137404578" y="4.9295774647887329"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

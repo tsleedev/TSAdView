@@ -1,0 +1,462 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		7C09D2592A6A1E61007DCEA4 /* TSAdView in Frameworks */ = {isa = PBXBuildFile; productRef = 7C09D2582A6A1E61007DCEA4 /* TSAdView */; };
+		7CBCF02E2A68F045007974E5 /* AdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CBCF02D2A68F045007974E5 /* AdViewController.swift */; };
+		7CBCF0302A68F084007974E5 /* AdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CBCF02F2A68F084007974E5 /* AdView.swift */; };
+		7CBCF0332A691E3A007974E5 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 7CBCF0322A691E3A007974E5 /* GoogleMobileAds */; };
+		7CBCF0452A69F555007974E5 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 7CBCF0442A69F555007974E5 /* Lottie */; };
+		7CBCF04D2A69F7B7007974E5 /* AdManagerLottieViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CBCF04C2A69F7B7007974E5 /* AdManagerLottieViewController.swift */; };
+		7CBCF04F2A69F7D2007974E5 /* AdPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CBCF04E2A69F7D2007974E5 /* AdPopupViewController.swift */; };
+		7CF796842A67A7B200E3AA2C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF796832A67A7B200E3AA2C /* AppDelegate.swift */; };
+		7CF796862A67A7B200E3AA2C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF796852A67A7B200E3AA2C /* SceneDelegate.swift */; };
+		7CF796882A67A7B200E3AA2C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF796872A67A7B200E3AA2C /* ViewController.swift */; };
+		7CF7968B2A67A7B200E3AA2C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7CF796892A67A7B200E3AA2C /* Main.storyboard */; };
+		7CF7968D2A67A7B400E3AA2C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7CF7968C2A67A7B400E3AA2C /* Assets.xcassets */; };
+		7CF796902A67A7B400E3AA2C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7CF7968E2A67A7B400E3AA2C /* LaunchScreen.storyboard */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		7C09D2572A6A1DC0007DCEA4 /* TSAdView */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = TSAdView; path = ../..; sourceTree = "<group>"; };
+		7CBCF02D2A68F045007974E5 /* AdViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdViewController.swift; sourceTree = "<group>"; };
+		7CBCF02F2A68F084007974E5 /* AdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdView.swift; sourceTree = "<group>"; };
+		7CBCF04C2A69F7B7007974E5 /* AdManagerLottieViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdManagerLottieViewController.swift; sourceTree = "<group>"; };
+		7CBCF04E2A69F7D2007974E5 /* AdPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdPopupViewController.swift; sourceTree = "<group>"; };
+		7CF796802A67A7B200E3AA2C /* TSAdViewUIKitDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TSAdViewUIKitDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7CF796832A67A7B200E3AA2C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		7CF796852A67A7B200E3AA2C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		7CF796872A67A7B200E3AA2C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		7CF7968A2A67A7B200E3AA2C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		7CF7968C2A67A7B400E3AA2C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		7CF7968F2A67A7B400E3AA2C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		7CF796912A67A7B400E3AA2C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		7CF7967D2A67A7B200E3AA2C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7CBCF0332A691E3A007974E5 /* GoogleMobileAds in Frameworks */,
+				7C09D2592A6A1E61007DCEA4 /* TSAdView in Frameworks */,
+				7CBCF0452A69F555007974E5 /* Lottie in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		7C09D2562A6A1DC0007DCEA4 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				7C09D2572A6A1DC0007DCEA4 /* TSAdView */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
+		7CBCF0502A6A0EAE007974E5 /* SwiftUI */ = {
+			isa = PBXGroup;
+			children = (
+				7CBCF02F2A68F084007974E5 /* AdView.swift */,
+				7CBCF02D2A68F045007974E5 /* AdViewController.swift */,
+			);
+			path = SwiftUI;
+			sourceTree = "<group>";
+		};
+		7CF796772A67A7B200E3AA2C = {
+			isa = PBXGroup;
+			children = (
+				7C09D2562A6A1DC0007DCEA4 /* Packages */,
+				7CF796822A67A7B200E3AA2C /* TSAdViewUIKitDemo */,
+				7CF796812A67A7B200E3AA2C /* Products */,
+				7CF7969B2A67B79300E3AA2C /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		7CF796812A67A7B200E3AA2C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7CF796802A67A7B200E3AA2C /* TSAdViewUIKitDemo.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7CF796822A67A7B200E3AA2C /* TSAdViewUIKitDemo */ = {
+			isa = PBXGroup;
+			children = (
+				7CF796832A67A7B200E3AA2C /* AppDelegate.swift */,
+				7CF796852A67A7B200E3AA2C /* SceneDelegate.swift */,
+				7CF796872A67A7B200E3AA2C /* ViewController.swift */,
+				7CBCF04E2A69F7D2007974E5 /* AdPopupViewController.swift */,
+				7CBCF04C2A69F7B7007974E5 /* AdManagerLottieViewController.swift */,
+				7CBCF0502A6A0EAE007974E5 /* SwiftUI */,
+				7CF796892A67A7B200E3AA2C /* Main.storyboard */,
+				7CF7968C2A67A7B400E3AA2C /* Assets.xcassets */,
+				7CF7968E2A67A7B400E3AA2C /* LaunchScreen.storyboard */,
+				7CF796912A67A7B400E3AA2C /* Info.plist */,
+			);
+			path = TSAdViewUIKitDemo;
+			sourceTree = "<group>";
+		};
+		7CF7969B2A67B79300E3AA2C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		7CF7967F2A67A7B200E3AA2C /* TSAdViewUIKitDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7CF796942A67A7B400E3AA2C /* Build configuration list for PBXNativeTarget "TSAdViewUIKitDemo" */;
+			buildPhases = (
+				7CF7967C2A67A7B200E3AA2C /* Sources */,
+				7CF7967D2A67A7B200E3AA2C /* Frameworks */,
+				7CF7967E2A67A7B200E3AA2C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TSAdViewUIKitDemo;
+			packageProductDependencies = (
+				7CBCF0322A691E3A007974E5 /* GoogleMobileAds */,
+				7CBCF0442A69F555007974E5 /* Lottie */,
+				7C09D2582A6A1E61007DCEA4 /* TSAdView */,
+			);
+			productName = TSAdManagerUIKitDemo;
+			productReference = 7CF796802A67A7B200E3AA2C /* TSAdViewUIKitDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		7CF796782A67A7B200E3AA2C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1430;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					7CF7967F2A67A7B200E3AA2C = {
+						CreatedOnToolsVersion = 14.3.1;
+					};
+				};
+			};
+			buildConfigurationList = 7CF7967B2A67A7B200E3AA2C /* Build configuration list for PBXProject "TSAdViewUIKitDemo" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 7CF796772A67A7B200E3AA2C;
+			packageReferences = (
+				7CBCF0312A691E3A007974E5 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
+				7CBCF0432A69F555007974E5 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+			);
+			productRefGroup = 7CF796812A67A7B200E3AA2C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				7CF7967F2A67A7B200E3AA2C /* TSAdViewUIKitDemo */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		7CF7967E2A67A7B200E3AA2C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7CF796902A67A7B400E3AA2C /* LaunchScreen.storyboard in Resources */,
+				7CF7968D2A67A7B400E3AA2C /* Assets.xcassets in Resources */,
+				7CF7968B2A67A7B200E3AA2C /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7CF7967C2A67A7B200E3AA2C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7CF796882A67A7B200E3AA2C /* ViewController.swift in Sources */,
+				7CBCF02E2A68F045007974E5 /* AdViewController.swift in Sources */,
+				7CBCF04D2A69F7B7007974E5 /* AdManagerLottieViewController.swift in Sources */,
+				7CBCF0302A68F084007974E5 /* AdView.swift in Sources */,
+				7CBCF04F2A69F7D2007974E5 /* AdPopupViewController.swift in Sources */,
+				7CF796842A67A7B200E3AA2C /* AppDelegate.swift in Sources */,
+				7CF796862A67A7B200E3AA2C /* SceneDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		7CF796892A67A7B200E3AA2C /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7CF7968A2A67A7B200E3AA2C /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		7CF7968E2A67A7B400E3AA2C /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7CF7968F2A67A7B400E3AA2C /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		7CF796922A67A7B400E3AA2C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		7CF796932A67A7B400E3AA2C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		7CF796952A67A7B400E3AA2C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TSAdViewUIKitDemo/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tsleedev.TSAdViewUIKitDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		7CF796962A67A7B400E3AA2C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TSAdViewUIKitDemo/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tsleedev.TSAdViewUIKitDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		7CF7967B2A67A7B200E3AA2C /* Build configuration list for PBXProject "TSAdViewUIKitDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7CF796922A67A7B400E3AA2C /* Debug */,
+				7CF796932A67A7B400E3AA2C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7CF796942A67A7B400E3AA2C /* Build configuration list for PBXNativeTarget "TSAdViewUIKitDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7CF796952A67A7B400E3AA2C /* Debug */,
+				7CF796962A67A7B400E3AA2C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		7CBCF0312A691E3A007974E5 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googleads/swift-package-manager-google-mobile-ads.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.0.0;
+			};
+		};
+		7CBCF0432A69F555007974E5 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		7C09D2582A6A1E61007DCEA4 /* TSAdView */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TSAdView;
+		};
+		7CBCF0322A691E3A007974E5 /* GoogleMobileAds */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7CBCF0312A691E3A007974E5 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
+			productName = GoogleMobileAds;
+		};
+		7CBCF0442A69F555007974E5 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7CBCF0432A69F555007974E5 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 7CF796782A67A7B200E3AA2C /* Project object */;
+}
