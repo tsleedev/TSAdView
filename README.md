@@ -20,8 +20,6 @@ To use TSAdView with the Swift Package Manager, add the following to your Packag
 .package(url: "https://github.com/tsleedev/TSAdView.git", .upToNextMajor(from: "0.1.0"))
 ```
 
-Replace USERNAME with your GitHub username.
-
 ## Usage
 
 ### Import the TSAdView module
