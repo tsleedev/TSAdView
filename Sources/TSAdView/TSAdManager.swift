@@ -51,10 +51,10 @@ final class TSAdManager {
 private extension TSAdManager {
     func loadGoogleAdManager(with params: TSAdManagerParams, completion: @escaping TSAdManagerLoader.GADBannerViewResult) {
         let dispatchGroup = DispatchGroup()
-        var results = [GADCustomNativeAd]()
+        var results = [Int: GADCustomNativeAd]()
         let serialQueue = DispatchQueue(label: "com.tsleedev.TSAdView.googleAdManagerSaverQueue")
 
-        params.adUnitIDs.forEach { adUnitID in
+        params.adUnitIDs.enumerated().forEach { index, adUnitID in
             dispatchGroup.enter()
             let adManagerLoader = TSAdManagerLoader(rootViewController: params.parentViewController,
                                                     adFormatIDs: params.adFormatIDs,
@@ -67,7 +67,7 @@ private extension TSAdManager {
                     // Save your results in a thread safe manner
                     serialQueue.async {
                         if let customNativeAd = customNativeAds.first {
-                            results.append(customNativeAd)
+                            results[index] = customNativeAd
                         }
                     }
                 case .failure:
@@ -78,11 +78,19 @@ private extension TSAdManager {
         }
 
         dispatchGroup.notify(queue: .main) {
-            if results.isEmpty {
+            let sortedKeys = results.keys.sorted(by: <)
+            var orderedResults: [GADCustomNativeAd] = []
+            sortedKeys.forEach { key in
+                if let banner = results[key] {
+                    orderedResults.append(banner)
+                }
+            }
+
+            if orderedResults.isEmpty {
                 let error = NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "No Ads Found"])
                 completion(.failure(error))
             } else {
-                completion(.success(results))
+                completion(.success(orderedResults))
             }
         }
     }
