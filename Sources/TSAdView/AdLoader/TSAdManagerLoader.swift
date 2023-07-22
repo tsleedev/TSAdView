@@ -48,6 +48,7 @@ extension TSAdManagerLoader : GADCustomNativeAdLoaderDelegate {
     
     func adLoader(_ adLoader: GADAdLoader, didReceive customNativeAd: GADCustomNativeAd) {
         print(String(describing: type(of: self)) + " adLoader:didReceive: \(customNativeAd)")
+        customNativeAds.append(customNativeAd)
     }
     
     func adLoader(_ adLoader: GADAdLoader, didFailToReceiveAdWithError error: Error) {
