@@ -14,12 +14,18 @@ public enum TSAdServiceType {
 
 public struct TSAdManagerParams {
     let parentViewController: UIViewController
-    let adUnitID: String
+    let adFormatIDs: [String]
+    let adUnitIDs: [String]
+    let customTargeting: [String: String]?
     
     public init(viewController: UIViewController = UIViewController(),
-                adUnitID: String) {
+                adFormatIDs: [String],
+                adUnitIDs: [String],
+                customTargeting: [String: String]? = nil) {
         self.parentViewController = viewController
-        self.adUnitID = adUnitID
+        self.adFormatIDs = adFormatIDs
+        self.adUnitIDs = adUnitIDs
+        self.customTargeting = customTargeting
     }
 }
 

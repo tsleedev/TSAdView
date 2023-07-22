@@ -11,8 +11,8 @@ import GoogleMobileAds
 class TSAdMobLoader: NSObject {
     private static var isAdMobStarted = false
     
-    typealias GADBannerViewResult = Result<GADBannerView, Error>
-    private var completion: ((GADBannerViewResult) -> ())?
+    typealias GADBannerViewResult = (Result<GADBannerView, Error>) -> ()
+    private var completion: GADBannerViewResult?
     private var bannerAdView: GADBannerView?
     
     override init() {
@@ -20,7 +20,7 @@ class TSAdMobLoader: NSObject {
         startAdMobIfNeeded()
     }
     
-    func load(rootViewController: UIViewController, adUnitID: String, adDimension: CGSize, completion: @escaping (GADBannerViewResult) -> ()) {
+    func load(rootViewController: UIViewController, adUnitID: String, adDimension: CGSize, completion: @escaping GADBannerViewResult) {
         self.completion = completion
         
         let bannerView = GADBannerView(adSize: GADCurrentOrientationAnchoredAdaptiveBannerAdSizeWithWidth(adDimension.width))

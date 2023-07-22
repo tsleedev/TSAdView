@@ -9,7 +9,7 @@ import UIKit
 import GoogleMobileAds
 
 public class TSAdView: UIView {
-    public typealias AdViewProvider = (GADCustomNativeAd) -> UIView?
+    public typealias AdViewProvider = ([GADCustomNativeAd]) -> UIView?
     
     private let adLoading: UIActivityIndicatorView = {
         let indicatorView = UIActivityIndicatorView(style: .medium)
@@ -35,11 +35,11 @@ public class TSAdView: UIView {
     }
     
     public func load() {
-        adManager.load(with: types) { [weak self] customNativeAd, bannerView  in
+        adManager.load(with: types) { [weak self] customNativeAds, bannerView  in
             guard let self = self else { return }
             var adView: UIView?
-            if let customNativeAd = customNativeAd {
-                adView = self.adViewProvider(customNativeAd)
+            if let customNativeAds = customNativeAds {
+                adView = self.adViewProvider(customNativeAds)
             } else if let view = bannerView {
                 adView = view
             }

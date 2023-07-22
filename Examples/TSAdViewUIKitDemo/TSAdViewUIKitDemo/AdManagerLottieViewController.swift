@@ -27,16 +27,20 @@ private extension AdManagerLottieViewController {
     func adLoad() {
         let types: [TSAdServiceType] = [
             .googleAdManager(params: .init(viewController: self,
-                                           adUnitID: /*@START_MENU_TOKEN@*/"Your adUnitID"/*@END_MENU_TOKEN@*/)),
+                                           adFormatIDs: [/*@START_MENU_TOKEN@*/"Your adFormatIDs"/*@END_MENU_TOKEN@*/],
+                                           adUnitIDs: [/*@START_MENU_TOKEN@*/"Your adUnitID"/*@END_MENU_TOKEN@*/])),
             .googleAdMob(params: .init(viewController: self,
 //                                       adUnitID: /*@START_MENU_TOKEN@*/"Your adUnitID"/*@END_MENU_TOKEN@*/,
                                        adDimension: CGSize(width: 200, height: 100)))
         ]
-        let adView = TSAdView(with: types) { [weak self] ad in
+        let adView = TSAdView(with: types) { [weak self] ads in
             // Create and return your custom UIView here based on the `ad`.
             // Note: This closure is specifically designed for AdManager.
             // For AdMob, you don't need to provide a custom UIView.
-            guard let self = self else { return nil }
+            guard
+                let self = self,
+                let ad = ads.first
+            else { return nil }
             return self.drawAd(with: ad)
         }
         adView.load()

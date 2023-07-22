@@ -9,13 +9,24 @@ import Foundation
 import GoogleMobileAds
 
 class TSAdManagerLoader: NSObject {
-    typealias GADBannerViewResult = Result<[GADCustomNativeAd], Error>
-    private var completion: ((GADBannerViewResult) -> ())?
-    
+    typealias GADBannerViewResult = (Result<[GADCustomNativeAd], Error>) -> ()
+    private var completion: GADBannerViewResult?
     private var adLoader: GADAdLoader!
     private var customNativeAds: [GADCustomNativeAd] = []
     
-    func load(rootViewController: UIViewController, adUnitID: String, completion: @escaping (GADBannerViewResult) -> ()) {
+    private let rootViewController: UIViewController
+    private let adFormatIDs: [String]
+    private let adUnitID: String
+    private let customTargeting: [String: String]?
+    
+    init(rootViewController: UIViewController, adFormatIDs: [String], adUnitID: String, customTargeting: [String : String]?) {
+        self.rootViewController = rootViewController
+        self.adFormatIDs = adFormatIDs
+        self.adUnitID = adUnitID
+        self.customTargeting = customTargeting
+    }
+    
+    func load(completion: @escaping GADBannerViewResult) {
         self.completion = completion
 //        let multipleAdsOptions = GADMultipleAdsAdLoaderOptions()
 //        multipleAdsOptions.numberOfAds = 1
@@ -25,24 +36,22 @@ class TSAdManagerLoader: NSObject {
                                options: [])
         adLoader.delegate = self
         let adRequest = GAMRequest()
-//        adRequest.customTargeting = UserViewModel.shared.customTargeting
+        adRequest.customTargeting = customTargeting
         adLoader.load(adRequest)
     }
 }
 
 extension TSAdManagerLoader : GADCustomNativeAdLoaderDelegate {
     func customNativeAdFormatIDs(for adLoader: GADAdLoader) -> [String] {
-        return ["11888177", "11887920", "11946351"]
+        return adFormatIDs
     }
     
     func adLoader(_ adLoader: GADAdLoader, didReceive customNativeAd: GADCustomNativeAd) {
         print(String(describing: type(of: self)) + " adLoader:didReceive: \(customNativeAd)")
-        self.customNativeAds.append(customNativeAd)
     }
     
     func adLoader(_ adLoader: GADAdLoader, didFailToReceiveAdWithError error: Error) {
         print(String(describing: type(of: self)) + " adLoader:didFailToReceiveAdWithError: \(error.localizedDescription)")
-        completion?(.failure(error))
     }
     
     func adLoaderDidFinishLoading(_ adLoader: GADAdLoader) {
