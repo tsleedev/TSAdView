@@ -58,5 +58,6 @@ extension TSAdManagerLoader : GADCustomNativeAdLoaderDelegate {
     func adLoaderDidFinishLoading(_ adLoader: GADAdLoader) {
         print(String(describing: type(of: self)) + " adLoaderDidFinishLoading")
         completion?(.success(customNativeAds))
+        completion = nil
     }
 }
