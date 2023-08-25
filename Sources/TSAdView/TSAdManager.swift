@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 import GoogleMobileAds
 
 final class TSAdManager {
@@ -13,15 +14,16 @@ final class TSAdManager {
     
     private lazy var adManagerLoaders = [TSAdManagerLoader]()
     private lazy var adMobLoader = TSAdMobLoader()
+    private var cancellables: Set<AnyCancellable> = []
     
     public func load(with types: [TSAdServiceType], completion: @escaping AdManagerProvider) {
         guard let type = types.first else {
             completion(nil, nil)
             return
         }
-        
+
         let remainingTypes = Array(types.dropFirst())
-        
+
         switch type {
         case .googleAdManager(let params):
             loadGoogleAdManager(with: params) { [weak self] result in
@@ -49,62 +51,66 @@ final class TSAdManager {
 
 // MARK: - Helper
 private extension TSAdManager {
-    func loadGoogleAdManager(with params: TSAdManagerParams, completion: @escaping TSAdManagerLoader.GADBannerViewResult) {
-        let dispatchGroup = DispatchGroup()
+    func loadGoogleAdManager(with params: TSAdManagerParams, completion: @escaping (Result<[GADCustomNativeAd], Error>) -> ()) {
         var results = [Int: GADCustomNativeAd]()
         let serialQueue = DispatchQueue(label: "com.tsleedev.TSAdView.googleAdManagerSaverQueue")
-
-        params.adUnitIDs.enumerated().forEach { index, adUnitID in
-            dispatchGroup.enter()
+        
+        let publishers = params.adUnitIDs.enumerated().map { [weak self] index, adUnitID -> AnyPublisher<(Int, GADCustomNativeAd), Never> in
+            guard let self = self else { return Empty<(Int, GADCustomNativeAd), Never>().eraseToAnyPublisher() }
             let adManagerLoader = TSAdManagerLoader(rootViewController: params.parentViewController,
                                                     adFormatIDs: params.adFormatIDs,
                                                     adUnitID: adUnitID,
                                                     customTargeting: params.customTargeting)
-            adManagerLoaders.append(adManagerLoader)
-            adManagerLoader.load() { result in
-                switch result {
-                case .success(let customNativeAds):
-                    // Save your results in a thread safe manner
-                    serialQueue.async {
-                        if let customNativeAd = customNativeAds.first {
-                            results[index] = customNativeAd
-                        }
+            self.adManagerLoaders.append(adManagerLoader)
+            return adManagerLoader.customNativeAdsPublisher
+                .compactMap { $0.first }
+                .map { ad in (index, ad) }
+                .eraseToAnyPublisher()
+        }
+        
+        Publishers.MergeMany(publishers)
+            .collect()
+            .sink { _ in
+                let sortedKeys = results.keys.sorted(by: <)
+                var orderedResults: [GADCustomNativeAd] = []
+                sortedKeys.forEach { key in
+                    if let banner = results[key] {
+                        orderedResults.append(banner)
                     }
-                case .failure:
-                    break
                 }
-                dispatchGroup.leave()
-            }
-        }
-
-        dispatchGroup.notify(queue: .main) {
-            let sortedKeys = results.keys.sorted(by: <)
-            var orderedResults: [GADCustomNativeAd] = []
-            sortedKeys.forEach { key in
-                if let banner = results[key] {
-                    orderedResults.append(banner)
+                
+                if orderedResults.isEmpty {
+                    let error = NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "No Ads Found"])
+                    completion(.failure(error))
+                } else {
+                    completion(.success(orderedResults))
+                }
+            } receiveValue: { indexedAds in
+                indexedAds.forEach { index, ad in
+                    serialQueue.sync {
+                        results[index] = ad
+                    }
                 }
             }
-
-            if orderedResults.isEmpty {
-                let error = NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "No Ads Found"])
-                completion(.failure(error))
-            } else {
-                completion(.success(orderedResults))
-            }
-        }
+            .store(in: &cancellables)
     }
     
-    func loadGoogleAdMob(with params: TSAdMobParams, completion: @escaping TSAdMobLoader.GADBannerViewResult) {
+    func loadGoogleAdMob(with params: TSAdMobParams, completion: @escaping (Result<GADBannerView, Error>) -> ()) {
         adMobLoader.load(rootViewController: params.parentViewController,
                          adUnitID: params.adUnitID,
-                         adDimension: params.adDimension) { result in
-            switch result {
-            case .success(let view):
+                         adDimension: params.adDimension)
+        
+        adMobLoader.bannerViewPublisher
+            .sink { result in
+                switch result {
+                case .finished:
+                    break
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            } receiveValue: { view in
                 completion(.success(view))
-            case .failure(let error):
-                completion(.failure(error))
             }
-        }
+            .store(in: &cancellables)
     }
 }

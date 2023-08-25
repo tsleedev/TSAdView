@@ -6,23 +6,24 @@
 //
 
 import Foundation
+import Combine
 import GoogleMobileAds
 
 class TSAdMobLoader: NSObject {
     private static var isAdMobStarted = false
-    
-    typealias GADBannerViewResult = (Result<GADBannerView, Error>) -> ()
-    private var completion: GADBannerViewResult?
     private var bannerAdView: GADBannerView?
+    
+    private var bannerViewSubject = PassthroughSubject<GADBannerView, Error>()
+       var bannerViewPublisher: AnyPublisher<GADBannerView, Error> {
+           bannerViewSubject.eraseToAnyPublisher()
+       }
     
     override init() {
         super.init()
         startAdMobIfNeeded()
     }
     
-    func load(rootViewController: UIViewController, adUnitID: String, adDimension: CGSize, completion: @escaping GADBannerViewResult) {
-        self.completion = completion
-        
+    func load(rootViewController: UIViewController, adUnitID: String, adDimension: CGSize) {
         let bannerView = GADBannerView(adSize: GADCurrentOrientationAnchoredAdaptiveBannerAdSizeWithWidth(adDimension.width))
         bannerView.adUnitID = adUnitID
         bannerView.rootViewController = rootViewController
@@ -41,12 +42,12 @@ extension TSAdMobLoader: GADBannerViewDelegate {
         if let adNetworkClassName = bannerView.responseInfo?.loadedAdNetworkResponseInfo?.adNetworkClassName {
             print("Banner adapter class name: \(adNetworkClassName)")
         }
-        completion?(.success(bannerView))
+        bannerViewSubject.send(bannerView)
     }
     
     func bannerView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: Error) {
         print(String(describing: type(of: self)) + " adView:didFailToReceiveAdWithError: \(error.localizedDescription)")
-        completion?(.failure(error))
+        bannerViewSubject.send(completion: .failure(error))
     }
     
     /// Tells the delegate that a full-screen view will be presented in response

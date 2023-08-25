@@ -6,11 +6,15 @@
 //
 
 import Foundation
+import Combine
 import GoogleMobileAds
 
 class TSAdManagerLoader: NSObject {
-    typealias GADBannerViewResult = (Result<[GADCustomNativeAd], Error>) -> ()
-    private var completion: GADBannerViewResult?
+    private var customNativeAdsSubject = PassthroughSubject<[GADCustomNativeAd], Never>()
+    var customNativeAdsPublisher: AnyPublisher<[GADCustomNativeAd], Never> {
+        customNativeAdsSubject.eraseToAnyPublisher()
+    }
+    
     private var adLoader: GADAdLoader!
     private var customNativeAds: [GADCustomNativeAd] = []
     
@@ -24,10 +28,11 @@ class TSAdManagerLoader: NSObject {
         self.adFormatIDs = adFormatIDs
         self.adUnitID = adUnitID
         self.customTargeting = customTargeting
+        super.init()
+        load()
     }
     
-    func load(completion: @escaping GADBannerViewResult) {
-        self.completion = completion
+    private func load() {
         let multipleAdsOptions = GADMultipleAdsAdLoaderOptions()
         multipleAdsOptions.numberOfAds = 1
         adLoader = GADAdLoader(adUnitID: adUnitID,
@@ -57,7 +62,7 @@ extension TSAdManagerLoader : GADCustomNativeAdLoaderDelegate {
     
     func adLoaderDidFinishLoading(_ adLoader: GADAdLoader) {
         print(String(describing: type(of: self)) + " adLoaderDidFinishLoading")
-        completion?(.success(customNativeAds))
-        completion = nil
+        customNativeAdsSubject.send(customNativeAds)
+        customNativeAdsSubject.send(completion: .finished)
     }
 }
