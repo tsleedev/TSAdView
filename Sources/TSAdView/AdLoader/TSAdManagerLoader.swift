@@ -28,8 +28,8 @@ class TSAdManagerLoader: NSObject {
     
     func load(completion: @escaping GADBannerViewResult) {
         self.completion = completion
-//        let multipleAdsOptions = GADMultipleAdsAdLoaderOptions()
-//        multipleAdsOptions.numberOfAds = 1
+        let multipleAdsOptions = GADMultipleAdsAdLoaderOptions()
+        multipleAdsOptions.numberOfAds = 1
         adLoader = GADAdLoader(adUnitID: adUnitID,
                                rootViewController: rootViewController,
                                adTypes: [GADAdLoaderAdType.customNative],
