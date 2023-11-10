@@ -12,7 +12,7 @@ public struct TSAdViewSwiftUI: UIViewRepresentable {
     private let adViewProvider: TSAdView.AdViewProvider?
     private let onAdLoadFailure: TSAdView.OnAdLoadFailure?
     
-    public init(adServiceTypes: [TSAdServiceType], adViewProvider: TSAdView.AdViewProvider?, onAdLoadFailure: TSAdView.OnAdLoadFailure?) {
+    public init(adServiceTypes: [TSAdServiceType], adViewProvider: TSAdView.AdViewProvider? = nil, onAdLoadFailure: TSAdView.OnAdLoadFailure? = nil) {
         self.adServiceTypes = adServiceTypes
         self.adViewProvider = adViewProvider
         self.onAdLoadFailure = onAdLoadFailure
