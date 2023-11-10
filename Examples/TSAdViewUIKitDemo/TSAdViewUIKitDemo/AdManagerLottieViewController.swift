@@ -43,7 +43,7 @@ private extension AdManagerLottieViewController {
             else { return nil }
             return self.drawAd(with: ad)
         }
-        adView.load()
+        adView.loadAd()
         adViewContainer.addSubview(adView)
         adView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([

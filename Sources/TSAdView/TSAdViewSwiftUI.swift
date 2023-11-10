@@ -9,16 +9,18 @@ import SwiftUI
 
 public struct TSAdViewSwiftUI: UIViewRepresentable {
     private let adServiceTypes: [TSAdServiceType]
-    private let adViewProvider: TSAdView.AdViewProvider
+    private let adViewProvider: TSAdView.AdViewProvider?
+    private let onAdLoadFailure: TSAdView.OnAdLoadFailure?
     
-    public init(adServiceTypes: [TSAdServiceType], adViewProvider: @escaping TSAdView.AdViewProvider) {
+    public init(adServiceTypes: [TSAdServiceType], adViewProvider: TSAdView.AdViewProvider?, onAdLoadFailure: TSAdView.OnAdLoadFailure?) {
         self.adServiceTypes = adServiceTypes
         self.adViewProvider = adViewProvider
+        self.onAdLoadFailure = onAdLoadFailure
     }
 
     public func makeUIView(context: Context) -> TSAdView {
-        let view = TSAdView(with: adServiceTypes, adViewProvider: adViewProvider)
-        view.load()
+        let view = TSAdView(with: adServiceTypes, adViewProvider: adViewProvider, onAdLoadFailure: onAdLoadFailure)
+        view.loadAd()
         return view
     }
     

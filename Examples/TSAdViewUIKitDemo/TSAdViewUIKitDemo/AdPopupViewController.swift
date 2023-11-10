@@ -30,13 +30,15 @@ private extension AdPopupViewController {
 //                                       adUnitID: /*@START_MENU_TOKEN@*/"Your adUnitID"/*@END_MENU_TOKEN@*/,
                                        adDimension: CGSize(width: 300, height: 400)))
         ]
-        let adView = TSAdView(with: types) { ads in
+        let adView = TSAdView(with: types, adViewProvider: { ads in
             // Create and return your custom UIView here based on the `ad`.
             // Note: This closure is specifically designed for AdManager.
             // For AdMob, you don't need to provide a custom UIView.
             return UIImageView(image: ads.first?.image(forKey: "image")?.image)
-        }
-        adView.load()
+        }, onAdLoadFailure: {
+            
+        })
+        adView.loadAd()
         adViewContainer.addSubview(adView)
         adView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([

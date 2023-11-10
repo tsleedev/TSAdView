@@ -16,7 +16,7 @@ final class TSAdManager {
     private lazy var adMobLoader = TSAdMobLoader()
     private var cancellables: Set<AnyCancellable> = []
     
-    public func load(with types: [TSAdServiceType], completion: @escaping AdManagerProvider) {
+    func loadAd(with types: [TSAdServiceType], completion: @escaping AdManagerProvider) {
         guard let type = types.first else {
             completion(nil, nil)
             return
@@ -32,7 +32,7 @@ final class TSAdManager {
                 case .success(let customNativeAds):
                     completion(customNativeAds, nil)
                 case .failure:
-                    self.load(with: remainingTypes, completion: completion)
+                    self.loadAd(with: remainingTypes, completion: completion)
                 }
             }
         case .googleAdMob(let params):
@@ -42,7 +42,7 @@ final class TSAdManager {
                 case .success(let view):
                     completion(nil, view)
                 case .failure:
-                    self.load(with: remainingTypes, completion: completion)
+                    self.loadAd(with: remainingTypes, completion: completion)
                 }
             }
         }

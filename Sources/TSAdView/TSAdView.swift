@@ -10,6 +10,7 @@ import GoogleMobileAds
 
 public class TSAdView: UIView {
     public typealias AdViewProvider = ([GADCustomNativeAd]) -> UIView?
+    public typealias OnAdLoadFailure = () -> Void
     
     private let adLoading: UIActivityIndicatorView = {
         let indicatorView = UIActivityIndicatorView(style: .medium)
@@ -21,11 +22,13 @@ public class TSAdView: UIView {
     
     private let adManager = TSAdManager()
     private let types: [TSAdServiceType]
-    private let adViewProvider: AdViewProvider
+    private let adViewProvider: AdViewProvider?
+    private let onAdLoadFailure: OnAdLoadFailure?
     
-    public init(with types: [TSAdServiceType], adViewProvider: @escaping AdViewProvider) {
+    public init(with types: [TSAdServiceType], adViewProvider: AdViewProvider? = nil, onAdLoadFailure: OnAdLoadFailure? = nil) {
         self.types = types
         self.adViewProvider = adViewProvider
+        self.onAdLoadFailure = onAdLoadFailure
         super.init(frame: .zero)
         setupViews()
     }
@@ -34,16 +37,19 @@ public class TSAdView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func load() {
-        adManager.load(with: types) { [weak self] customNativeAds, bannerView  in
+    public func loadAd() {
+        adManager.loadAd(with: types) { [weak self] customNativeAds, bannerView  in
             guard let self = self else { return }
             var adView: UIView?
             if let customNativeAds = customNativeAds {
-                adView = self.adViewProvider(customNativeAds)
+                adView = self.adViewProvider?(customNativeAds)
             } else if let view = bannerView {
                 adView = view
             }
-            guard let adView = adView else { return }
+            guard let adView = adView else {
+                self.onAdLoadFailure?()
+                return
+            }
             self.subviews.forEach { subview in
                 subview.removeFromSuperview()
             }
