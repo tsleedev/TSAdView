@@ -39,6 +39,7 @@ private extension AdPopupViewController {
             
         })
         adView.loadAd()
+        adView.adIndicatorColor = .white
         adViewContainer.addSubview(adView)
         adView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([

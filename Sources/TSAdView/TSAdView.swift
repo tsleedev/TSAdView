@@ -14,7 +14,6 @@ public class TSAdView: UIView {
     
     private let adLoading: UIActivityIndicatorView = {
         let indicatorView = UIActivityIndicatorView(style: .medium)
-        indicatorView.tintColor = .white
         indicatorView.hidesWhenStopped = true
         indicatorView.translatesAutoresizingMaskIntoConstraints = false
         return indicatorView
@@ -24,6 +23,10 @@ public class TSAdView: UIView {
     private let types: [TSAdServiceType]
     private let adViewProvider: AdViewProvider?
     private let onAdLoadFailure: OnAdLoadFailure?
+    public var adIndicatorColor: UIColor? {
+        get { adLoading.color }
+        set { adLoading.color = newValue }
+    }
     
     public init(with types: [TSAdServiceType], adViewProvider: AdViewProvider? = nil, onAdLoadFailure: OnAdLoadFailure? = nil) {
         self.types = types
