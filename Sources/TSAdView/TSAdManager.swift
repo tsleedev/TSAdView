@@ -10,7 +10,7 @@ import Combine
 import GoogleMobileAds
 
 final class TSAdManager {
-    typealias AdManagerProvider = ([GADCustomNativeAd]?, GADBannerView?) -> ()
+    typealias AdManagerProvider = ([GADCustomNativeAd]?, GADBannerView?, TSAdServiceType?) -> ()
     
     private lazy var adManagerLoaders = [TSAdManagerLoader]()
     private lazy var adMobLoader = TSAdMobLoader()
@@ -18,7 +18,7 @@ final class TSAdManager {
     
     func loadAd(with types: [TSAdServiceType], completion: @escaping AdManagerProvider) {
         guard let type = types.first else {
-            completion(nil, nil)
+            completion(nil, nil, nil)
             return
         }
 
@@ -30,7 +30,7 @@ final class TSAdManager {
                 guard let self = self else { return }
                 switch result {
                 case .success(let customNativeAds):
-                    completion(customNativeAds, nil)
+                    completion(customNativeAds, nil, type)
                 case .failure:
                     self.loadAd(with: remainingTypes, completion: completion)
                 }
@@ -40,7 +40,7 @@ final class TSAdManager {
                 guard let self = self else { return }
                 switch result {
                 case .success(let view):
-                    completion(nil, view)
+                    completion(nil, view, type)
                 case .failure:
                     self.loadAd(with: remainingTypes, completion: completion)
                 }

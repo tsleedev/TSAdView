@@ -33,7 +33,7 @@ private extension AdManagerLottieViewController {
 //                                       adUnitID: /*@START_MENU_TOKEN@*/"Your adUnitID"/*@END_MENU_TOKEN@*/,
                                        adDimension: CGSize(width: 200, height: 100)))
         ]
-        let adView = TSAdView(with: types) { [weak self] ads in
+        let adView = TSAdView(with: types) { [weak self] ads, adServiceType in
             // Create and return your custom UIView here based on the `ad`.
             // Note: This closure is specifically designed for AdManager.
             // For AdMob, you don't need to provide a custom UIView.

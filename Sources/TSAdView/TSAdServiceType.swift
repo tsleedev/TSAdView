@@ -17,15 +17,18 @@ public struct TSAdManagerParams {
     let adFormatIDs: [String]
     let adUnitIDs: [String]
     let customTargeting: [String: String]?
+    let userInfo: [String: Any]?
     
     public init(viewController: UIViewController = UIViewController(),
                 adFormatIDs: [String],
                 adUnitIDs: [String],
-                customTargeting: [String: String]? = nil) {
+                customTargeting: [String: String]? = nil,
+                userInfo: [String: Any]? = nil) {
         self.parentViewController = viewController
         self.adFormatIDs = adFormatIDs
         self.adUnitIDs = adUnitIDs
         self.customTargeting = customTargeting
+        self.userInfo = userInfo
     }
 }
 
@@ -33,12 +36,15 @@ public struct TSAdMobParams {
     let parentViewController: UIViewController
     let adUnitID: String
     let adDimension: CGSize
+    let userInfo: [String: Any]?
     
     public init(viewController: UIViewController = UIViewController(),
                 adUnitID: String = "ca-app-pub-3940256099942544/2934735716",
-                adDimension: CGSize = CGSize(width: 320, height: 50)) {
+                adDimension: CGSize = CGSize(width: 320, height: 50),
+                userInfo: [String: Any]? = nil) {
         self.parentViewController = viewController
         self.adUnitID = adUnitID
         self.adDimension = adDimension
+        self.userInfo = userInfo
     }
 }
