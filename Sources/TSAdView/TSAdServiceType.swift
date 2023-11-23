@@ -17,7 +17,7 @@ public struct TSAdManagerParams {
     let adFormatIDs: [String]
     let adUnitIDs: [String]
     let customTargeting: [String: String]?
-    let userInfo: [String: Any]?
+    public let userInfo: [String: Any]?
     
     public init(viewController: UIViewController = UIViewController(),
                 adFormatIDs: [String],
@@ -36,7 +36,7 @@ public struct TSAdMobParams {
     let parentViewController: UIViewController
     let adUnitID: String
     let adDimension: CGSize
-    let userInfo: [String: Any]?
+    public let userInfo: [String: Any]?
     
     public init(viewController: UIViewController = UIViewController(),
                 adUnitID: String = "ca-app-pub-3940256099942544/2934735716",
