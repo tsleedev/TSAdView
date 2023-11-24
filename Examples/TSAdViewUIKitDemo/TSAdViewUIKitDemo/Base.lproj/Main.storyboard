@@ -12,7 +12,7 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="TSAdManagerUIKitDemo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="TSAdViewUIKitDemo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -49,7 +49,7 @@
         <!--Ad Manager Lottie View Controller-->
         <scene sceneID="WPt-e1-1Jg">
             <objects>
-                <viewController id="a8S-On-MIU" customClass="AdManagerLottieViewController" customModule="TSAdManagerUIKitDemo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="a8S-On-MIU" customClass="AdManagerLottieViewController" customModule="TSAdViewUIKitDemo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="jSZ-Q1-M3h">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -93,7 +93,7 @@
         <!--Ad Popup View Controller-->
         <scene sceneID="NW9-cW-P6O">
             <objects>
-                <viewController id="gyg-hl-lgq" customClass="AdPopupViewController" customModule="TSAdManagerUIKitDemo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="gyg-hl-lgq" customClass="AdPopupViewController" customModule="TSAdViewUIKitDemo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="sGs-mh-ihB">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -157,6 +157,7 @@
                     </view>
                     <connections>
                         <outlet property="adViewContainer" destination="aYN-xe-fed" id="qSA-wf-rLC"/>
+                        <outlet property="closeButton" destination="Lnd-H2-f4W" id="kzs-qk-uhi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ryf-Ig-XPd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

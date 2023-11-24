@@ -10,6 +10,7 @@ import GoogleMobileAds
 
 public class TSAdView: UIView {
     public typealias AdViewProvider = ([GADCustomNativeAd], TSAdServiceType) -> UIView?
+    public typealias OnAdMobLoadSuccess = () -> Void
     public typealias OnAdLoadFailure = () -> Void
     
     private let adLoading: UIActivityIndicatorView = {
@@ -22,15 +23,17 @@ public class TSAdView: UIView {
     private let adManager = TSAdManager()
     private let types: [TSAdServiceType]
     private let adViewProvider: AdViewProvider?
+    private let onAdMobLoadSuccess: OnAdMobLoadSuccess?
     private let onAdLoadFailure: OnAdLoadFailure?
     public var adIndicatorColor: UIColor? {
         get { adLoading.color }
         set { adLoading.color = newValue }
     }
     
-    public init(with types: [TSAdServiceType], adViewProvider: AdViewProvider? = nil, onAdLoadFailure: OnAdLoadFailure? = nil) {
+    public init(with types: [TSAdServiceType], adViewProvider: AdViewProvider? = nil, onAdMobLoadSuccess: OnAdMobLoadSuccess? = nil, onAdLoadFailure: OnAdLoadFailure? = nil) {
         self.types = types
         self.adViewProvider = adViewProvider
+        self.onAdMobLoadSuccess = onAdMobLoadSuccess
         self.onAdLoadFailure = onAdLoadFailure
         super.init(frame: .zero)
         setupViews()
@@ -48,6 +51,7 @@ public class TSAdView: UIView {
                 adView = self.adViewProvider?(customNativeAds, adServiceType)
             } else if let view = bannerView {
                 adView = view
+                self.onAdMobLoadSuccess?()
             }
             guard let adView = adView else {
                 self.onAdLoadFailure?()

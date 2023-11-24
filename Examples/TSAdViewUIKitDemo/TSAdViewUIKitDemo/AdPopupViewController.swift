@@ -10,11 +10,13 @@ import UIKit
 
 class AdPopupViewController: UIViewController {
     @IBOutlet private weak var adViewContainer: UIView!
+    @IBOutlet private weak var closeButton: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        closeButton.isHidden = true
         adLoad()
     }
 }
@@ -30,13 +32,18 @@ private extension AdPopupViewController {
 //                                       adUnitID: /*@START_MENU_TOKEN@*/"Your adUnitID"/*@END_MENU_TOKEN@*/,
                                        adDimension: CGSize(width: 300, height: 400)))
         ]
-        let adView = TSAdView(with: types, adViewProvider: { ads, adServiceType in
+        let adView = TSAdView(with: types, adViewProvider: { [weak self] ads, adServiceType in
             // Create and return your custom UIView here based on the `ad`.
             // Note: This closure is specifically designed for AdManager.
             // For AdMob, you don't need to provide a custom UIView.
+            self?.closeButton.isHidden = true
             return UIImageView(image: ads.first?.image(forKey: "image")?.image)
-        }, onAdLoadFailure: {
-            
+        }, onAdMobLoadSuccess: { [weak self] in
+            print("AdPopupViewController onAdMobLoadSuccess")
+            self?.closeButton.isHidden = false
+        }, onAdLoadFailure: { [weak self] in
+            print("AdPopupViewController onAdLoadFailure")
+            self?.presentingViewController?.dismiss(animated: true)
         })
         adView.loadAd()
         adView.adIndicatorColor = .white
