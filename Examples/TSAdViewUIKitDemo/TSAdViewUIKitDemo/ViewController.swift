@@ -38,6 +38,15 @@ class ViewController: UIViewController {
                 self?.navigationController?.pushViewController(AdViewController(), animated: true)
             })
         ]
+        
+        TSAdConsentManager.shared.resetConsentInformation()
+        
+        // 디버그 설정 활성화
+        let debugSettings = TSAdConsentDebugSettings(
+            testDeviceIdentifiers: ["YOUR_TEST_DEVICE_IDENTIFIER"],
+            geography: .EEA
+        )
+        TSAdConsentManager.shared.setDebugSettings(debugSettings)
     }
 }
 

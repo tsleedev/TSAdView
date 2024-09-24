@@ -1,6 +1,6 @@
 //
 //  TSAdMobLoader.swift
-//  
+//
 //
 //  Created by TAE SU LEE on 2023/07/19.
 //
@@ -14,13 +14,8 @@ class TSAdMobLoader: NSObject {
     private var bannerAdView: GADBannerView?
     
     private var bannerViewSubject = PassthroughSubject<GADBannerView, Error>()
-       var bannerViewPublisher: AnyPublisher<GADBannerView, Error> {
-           bannerViewSubject.eraseToAnyPublisher()
-       }
-    
-    override init() {
-        super.init()
-        startAdMobIfNeeded()
+    var bannerViewPublisher: AnyPublisher<GADBannerView, Error> {
+        bannerViewSubject.eraseToAnyPublisher()
     }
     
     func load(rootViewController: UIViewController, adUnitID: String, adDimension: CGSize) {
@@ -28,10 +23,33 @@ class TSAdMobLoader: NSObject {
         bannerView.adUnitID = adUnitID
         bannerView.rootViewController = rootViewController
         bannerView.delegate = self
-        let request = GADRequest()
         bannerView.frame = CGRect(x: 0, y: 0, width: adDimension.width, height: adDimension.height)
         bannerAdView = bannerView
-        bannerView.load(request)
+        
+        if TSAdConsentManager.shared.canRequestAds {
+            startGoogleMobileAdsSDK()
+        } else {
+            TSAdConsentManager.shared.requestConsentUpdate(from: rootViewController) { [weak self] (consentError) in
+                guard let self else { return }
+                
+                if let consentError {
+                    // Consent gathering failed.
+                    print("Error: \(consentError.localizedDescription)")
+                }
+                
+                if TSAdConsentManager.shared.canRequestAds {
+                    self.startGoogleMobileAdsSDK()
+                }
+            }
+        }
+    }
+    
+    private func startGoogleMobileAdsSDK() {
+        DispatchQueue.main.async {
+            // Initialize the Google Mobile Ads SDK.
+            self.startAdMobIfNeeded()
+            self.bannerAdView?.load(GADRequest())
+        }
     }
 }
 
