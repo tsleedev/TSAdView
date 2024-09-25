@@ -35,10 +35,11 @@ class TSAdMobLoader: NSObject {
                 if let consentError {
                     // Consent gathering failed.
                     print("Error: \(consentError.localizedDescription)")
-                }
-                
-                if TSAdConsentManager.shared.canRequestAds {
-                    self.startGoogleMobileAdsSDK()
+                    bannerViewSubject.send(completion: .failure(consentError))
+                } else {
+                    if TSAdConsentManager.shared.canRequestAds {
+                        self.startGoogleMobileAdsSDK()
+                    }
                 }
             }
         }

@@ -21,7 +21,7 @@ struct AdView: View {
                 // For AdMob, you don't need to provide a custom UIView.
                 return UIImageView(image: ads.first?.image(forKey: "image")?.image)
             }, onAdLoadFailure: {
-                
+                print("AdView onAdLoadFailure")
             }
         )
         .frame(width: 300, height: 400)

@@ -19,7 +19,7 @@ public struct TSAdManagerParams {
     let customTargeting: [String: String]?
     public let userInfo: [String: Any]?
     
-    public init(viewController: UIViewController = UIViewController(),
+    public init(viewController: UIViewController = UIApplication.topViewController(),
                 adFormatIDs: [String],
                 adUnitIDs: [String],
                 customTargeting: [String: String]? = nil,
@@ -38,7 +38,7 @@ public struct TSAdMobParams {
     let adDimension: CGSize
     public let userInfo: [String: Any]?
     
-    public init(viewController: UIViewController = UIViewController(),
+    public init(viewController: UIViewController = UIApplication.topViewController(),
                 adUnitID: String = "ca-app-pub-3940256099942544/2934735716",
                 adDimension: CGSize = CGSize(width: 320, height: 50),
                 userInfo: [String: Any]? = nil) {
