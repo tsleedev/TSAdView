@@ -31,6 +31,9 @@ class ViewController: UIViewController {
             TableViewItem(title: "Show AdPopup", action: { [weak self] in
                 self?.performSegue(withIdentifier: "AdPopup", sender: self)
             }),
+            TableViewItem(title: "Show AdMulti", action: { [weak self] in
+                self?.performSegue(withIdentifier: "AdMulti", sender: self)
+            }),
             TableViewItem(title: "Show AdLottie", action: { [weak self] in
                 self?.performSegue(withIdentifier: "AdLottie", sender: self)
             }),

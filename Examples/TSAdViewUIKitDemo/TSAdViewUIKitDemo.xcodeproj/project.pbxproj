@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7C09D2592A6A1E61007DCEA4 /* TSAdView in Frameworks */ = {isa = PBXBuildFile; productRef = 7C09D2582A6A1E61007DCEA4 /* TSAdView */; };
+		7C76DDE62CA3A8D600FEDB30 /* AdMultiViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C76DDE52CA3A8D400FEDB30 /* AdMultiViewController.swift */; };
 		7CBCF02E2A68F045007974E5 /* AdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CBCF02D2A68F045007974E5 /* AdViewController.swift */; };
 		7CBCF0302A68F084007974E5 /* AdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CBCF02F2A68F084007974E5 /* AdView.swift */; };
 		7CBCF0332A691E3A007974E5 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 7CBCF0322A691E3A007974E5 /* GoogleMobileAds */; };
@@ -24,6 +25,7 @@
 
 /* Begin PBXFileReference section */
 		7C09D2572A6A1DC0007DCEA4 /* TSAdView */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = TSAdView; path = ../..; sourceTree = "<group>"; };
+		7C76DDE52CA3A8D400FEDB30 /* AdMultiViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdMultiViewController.swift; sourceTree = "<group>"; };
 		7CBCF02D2A68F045007974E5 /* AdViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdViewController.swift; sourceTree = "<group>"; };
 		7CBCF02F2A68F084007974E5 /* AdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdView.swift; sourceTree = "<group>"; };
 		7CBCF04C2A69F7B7007974E5 /* AdManagerLottieViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdManagerLottieViewController.swift; sourceTree = "<group>"; };
@@ -94,6 +96,7 @@
 				7CF796852A67A7B200E3AA2C /* SceneDelegate.swift */,
 				7CF796872A67A7B200E3AA2C /* ViewController.swift */,
 				7CBCF04E2A69F7D2007974E5 /* AdPopupViewController.swift */,
+				7C76DDE52CA3A8D400FEDB30 /* AdMultiViewController.swift */,
 				7CBCF04C2A69F7B7007974E5 /* AdManagerLottieViewController.swift */,
 				7CBCF0502A6A0EAE007974E5 /* SwiftUI */,
 				7CF796892A67A7B200E3AA2C /* Main.storyboard */,
@@ -196,6 +199,7 @@
 				7CBCF04D2A69F7B7007974E5 /* AdManagerLottieViewController.swift in Sources */,
 				7CBCF0302A68F084007974E5 /* AdView.swift in Sources */,
 				7CBCF04F2A69F7D2007974E5 /* AdPopupViewController.swift in Sources */,
+				7C76DDE62CA3A8D600FEDB30 /* AdMultiViewController.swift in Sources */,
 				7CF796842A67A7B200E3AA2C /* AppDelegate.swift in Sources */,
 				7CF796862A67A7B200E3AA2C /* SceneDelegate.swift in Sources */,
 			);
@@ -345,7 +349,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = YW6867KB8Z;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TSAdViewUIKitDemo/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -376,7 +380,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = YW6867KB8Z;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TSAdViewUIKitDemo/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
