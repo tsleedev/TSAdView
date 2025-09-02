@@ -10,13 +10,13 @@ import Combine
 import GoogleMobileAds
 
 class TSAdManagerLoader: NSObject {
-    private var customNativeAdsSubject = PassthroughSubject<[GADCustomNativeAd], Never>()
-    var customNativeAdsPublisher: AnyPublisher<[GADCustomNativeAd], Never> {
+    private var customNativeAdsSubject = PassthroughSubject<[CustomNativeAd], Never>()
+    var customNativeAdsPublisher: AnyPublisher<[CustomNativeAd], Never> {
         customNativeAdsSubject.eraseToAnyPublisher()
     }
     
-    private var adLoader: GADAdLoader!
-    private var customNativeAds: [GADCustomNativeAd] = []
+    private var adLoader: AdLoader!
+    private var customNativeAds: [CustomNativeAd] = []
     
     private let rootViewController: UIViewController
     private let adFormatIDs: [String]
@@ -33,34 +33,34 @@ class TSAdManagerLoader: NSObject {
     }
     
     private func load() {
-        let multipleAdsOptions = GADMultipleAdsAdLoaderOptions()
+        let multipleAdsOptions = MultipleAdsAdLoaderOptions()
         multipleAdsOptions.numberOfAds = 1
-        adLoader = GADAdLoader(adUnitID: adUnitID,
-                               rootViewController: rootViewController,
-                               adTypes: [GADAdLoaderAdType.customNative],
-                               options: [])
+        adLoader = AdLoader(adUnitID: adUnitID,
+                            rootViewController: rootViewController,
+                            adTypes: [AdLoaderAdType.customNative],
+                            options: [])
         adLoader.delegate = self
-        let adRequest = GAMRequest()
+        let adRequest = AdManagerRequest()
         adRequest.customTargeting = customTargeting
         adLoader.load(adRequest)
     }
 }
 
-extension TSAdManagerLoader : GADCustomNativeAdLoaderDelegate {
-    func customNativeAdFormatIDs(for adLoader: GADAdLoader) -> [String] {
+extension TSAdManagerLoader : CustomNativeAdLoaderDelegate {
+    func customNativeAdFormatIDs(for adLoader: AdLoader) -> [String] {
         return adFormatIDs
     }
     
-    func adLoader(_ adLoader: GADAdLoader, didReceive customNativeAd: GADCustomNativeAd) {
+    func adLoader(_ adLoader: AdLoader, didReceive customNativeAd: CustomNativeAd) {
         print(String(describing: type(of: self)) + " adLoader:didReceive: \(customNativeAd)")
         customNativeAds.append(customNativeAd)
     }
     
-    func adLoader(_ adLoader: GADAdLoader, didFailToReceiveAdWithError error: Error) {
+    func adLoader(_ adLoader: AdLoader, didFailToReceiveAdWithError error: Error) {
         print(String(describing: type(of: self)) + " adLoader:didFailToReceiveAdWithError: \(error.localizedDescription)")
     }
     
-    func adLoaderDidFinishLoading(_ adLoader: GADAdLoader) {
+    func adLoaderDidFinishLoading(_ adLoader: AdLoader) {
         print(String(describing: type(of: self)) + " adLoaderDidFinishLoading")
         customNativeAdsSubject.send(customNativeAds)
         customNativeAdsSubject.send(completion: .finished)

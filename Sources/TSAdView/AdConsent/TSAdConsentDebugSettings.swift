@@ -10,9 +10,9 @@ import UserMessagingPlatform
 
 public struct TSAdConsentDebugSettings {
     public let testDeviceIdentifiers: [String]
-    public let geography: UMPDebugGeography
+    public let geography: DebugGeography
     
-    public init(testDeviceIdentifiers: [String], geography: UMPDebugGeography) {
+    public init(testDeviceIdentifiers: [String], geography: DebugGeography) {
         self.testDeviceIdentifiers = testDeviceIdentifiers
         self.geography = geography
     }

@@ -13,8 +13,8 @@ class AdMultiViewController: UIViewController {
     @IBOutlet private weak var adViewContainer1: UIView!
     @IBOutlet private weak var adViewContainer2: UIView!
     
-    private var customNativeAd1: GADCustomNativeAd?
-    private var customNativeAd2: GADCustomNativeAd?
+    private var customNativeAd1: CustomNativeAd?
+    private var customNativeAd2: CustomNativeAd?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,7 +57,7 @@ private extension AdMultiViewController {
         })
     }
     
-    func loadAd(for container: UIView, completion: @escaping (GADCustomNativeAd?) -> Void) {
+    func loadAd(for container: UIView, completion: @escaping (CustomNativeAd?) -> Void) {
         let types: [TSAdServiceType] = [
             .googleAdManager(params: .init(viewController: self,
                                            adFormatIDs: ["Your adFormatIDs"],

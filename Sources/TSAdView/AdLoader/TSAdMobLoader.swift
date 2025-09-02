@@ -11,15 +11,15 @@ import GoogleMobileAds
 
 class TSAdMobLoader: NSObject {
     private static var isAdMobStarted = false
-    private var bannerAdView: GADBannerView?
+    private var bannerAdView: BannerView?
     
-    private var bannerViewSubject = PassthroughSubject<GADBannerView, Error>()
-    var bannerViewPublisher: AnyPublisher<GADBannerView, Error> {
+    private var bannerViewSubject = PassthroughSubject<BannerView, Error>()
+    var bannerViewPublisher: AnyPublisher<BannerView, Error> {
         bannerViewSubject.eraseToAnyPublisher()
     }
     
     func load(rootViewController: UIViewController, adUnitID: String, adDimension: CGSize) {
-        let bannerView = GADBannerView(adSize: GADCurrentOrientationAnchoredAdaptiveBannerAdSizeWithWidth(adDimension.width))
+        let bannerView = BannerView(adSize: currentOrientationAnchoredAdaptiveBanner(width: adDimension.width))
         bannerView.adUnitID = adUnitID
         bannerView.rootViewController = rootViewController
         bannerView.delegate = self
@@ -49,14 +49,14 @@ class TSAdMobLoader: NSObject {
         DispatchQueue.main.async {
             // Initialize the Google Mobile Ads SDK.
             self.startAdMobIfNeeded()
-            self.bannerAdView?.load(GADRequest())
+            self.bannerAdView?.load(Request())
         }
     }
 }
 
 // MARK: - GADBannerViewDelegate
-extension TSAdMobLoader: GADBannerViewDelegate {
-    func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
+extension TSAdMobLoader: BannerViewDelegate {
+    func bannerViewDidReceiveAd(_ bannerView: BannerView) {
         print(String(describing: type(of: self)) + " adViewDidReceiveAd")
         if let adNetworkClassName = bannerView.responseInfo?.loadedAdNetworkResponseInfo?.adNetworkClassName {
             print("Banner adapter class name: \(adNetworkClassName)")
@@ -64,30 +64,30 @@ extension TSAdMobLoader: GADBannerViewDelegate {
         bannerViewSubject.send(bannerView)
     }
     
-    func bannerView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: Error) {
+    func bannerView(_ bannerView: BannerView, didFailToReceiveAdWithError error: Error) {
         print(String(describing: type(of: self)) + " adView:didFailToReceiveAdWithError: \(error.localizedDescription)")
         bannerViewSubject.send(completion: .failure(error))
     }
     
     /// Tells the delegate that a full-screen view will be presented in response
     /// to the user clicking on an ad.
-    func bannerViewWillPresentScreen(_ bannerView: GADBannerView) {
+    func bannerViewWillPresentScreen(_ bannerView: BannerView) {
         print(String(describing: type(of: self)) + " adViewWillPresentScreen")
     }
     
     /// Tells the delegate that the full-screen view will be dismissed.
-    func bannerViewWillDismissScreen(_ bannerView: GADBannerView) {
+    func bannerViewWillDismissScreen(_ bannerView: BannerView) {
         print(String(describing: type(of: self)) + " adViewWillDismissScreen")
     }
     
     /// Tells the delegate that the full-screen view has been dismissed.
-    func bannerViewDidDismissScreen(_ bannerView: GADBannerView) {
+    func bannerViewDidDismissScreen(_ bannerView: BannerView) {
         print(String(describing: type(of: self)) + " adViewDidDismissScreen")
     }
     
     /// Tells the delegate that a user click will open another app (such as
     /// the App Store), backgrounding the current app.
-    func bannerViewWillLeaveApplication(_ bannerView: GADBannerView) {
+    func bannerViewWillLeaveApplication(_ bannerView: BannerView) {
         print(String(describing: type(of: self)) + " adViewWillLeaveApplication")
     }
 }
@@ -97,7 +97,7 @@ private extension TSAdMobLoader {
     func startAdMobIfNeeded() {
         guard !TSAdMobLoader.isAdMobStarted else { return }
         
-        GADMobileAds.sharedInstance().start(completionHandler: nil)
+        MobileAds.shared.start(completionHandler: nil)
         TSAdMobLoader.isAdMobStarted = true
     }
 }

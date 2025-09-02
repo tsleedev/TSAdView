@@ -9,7 +9,7 @@ import UIKit
 import GoogleMobileAds
 
 public class TSAdView: UIView {
-    public typealias AdViewProvider = ([GADCustomNativeAd], TSAdServiceType) -> UIView?
+    public typealias AdViewProvider = ([CustomNativeAd], TSAdServiceType) -> UIView?
     public typealias OnAdMobLoadSuccess = () -> Void
     public typealias OnAdLoadFailure = () -> Void
     

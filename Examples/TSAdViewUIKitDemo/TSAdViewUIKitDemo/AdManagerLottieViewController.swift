@@ -13,7 +13,7 @@ import Lottie
 class AdManagerLottieViewController: UIViewController {
     @IBOutlet private weak var adViewContainer: UIView!
     
-    private var customNativeAd: GADCustomNativeAd?
+    private var customNativeAd: CustomNativeAd?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,7 +54,7 @@ private extension AdManagerLottieViewController {
         ])
     }
     
-    func drawAd(with customNativeAd: GADCustomNativeAd) -> UIView? {
+    func drawAd(with customNativeAd: CustomNativeAd) -> UIView? {
         self.customNativeAd = customNativeAd
         
         if let lottieJsonString = customNativeAd.string(forKey: "json"),

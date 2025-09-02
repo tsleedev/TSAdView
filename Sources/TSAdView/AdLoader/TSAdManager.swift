@@ -10,7 +10,7 @@ import Combine
 import GoogleMobileAds
 
 final class TSAdManager {
-    typealias AdManagerProvider = ([GADCustomNativeAd]?, GADBannerView?, TSAdServiceType?) -> ()
+    typealias AdManagerProvider = ([CustomNativeAd]?, BannerView?, TSAdServiceType?) -> ()
     
     private lazy var adManagerLoaders = [TSAdManagerLoader]()
     private lazy var adMobLoader = TSAdMobLoader()
@@ -51,12 +51,12 @@ final class TSAdManager {
 
 // MARK: - Helper
 private extension TSAdManager {
-    func loadGoogleAdManager(with params: TSAdManagerParams, completion: @escaping (Result<[GADCustomNativeAd], Error>) -> ()) {
-        var results = [Int: GADCustomNativeAd]()
+    func loadGoogleAdManager(with params: TSAdManagerParams, completion: @escaping (Result<[CustomNativeAd], Error>) -> ()) {
+        var results = [Int: CustomNativeAd]()
         let serialQueue = DispatchQueue(label: "com.tsleedev.TSAdView.googleAdManagerSaverQueue")
         
-        let publishers = params.adUnitIDs.enumerated().map { [weak self] index, adUnitID -> AnyPublisher<(Int, GADCustomNativeAd), Never> in
-            guard let self = self else { return Empty<(Int, GADCustomNativeAd), Never>().eraseToAnyPublisher() }
+        let publishers = params.adUnitIDs.enumerated().map { [weak self] index, adUnitID -> AnyPublisher<(Int, CustomNativeAd), Never> in
+            guard let self = self else { return Empty<(Int, CustomNativeAd), Never>().eraseToAnyPublisher() }
             let adManagerLoader = TSAdManagerLoader(rootViewController: params.parentViewController,
                                                     adFormatIDs: params.adFormatIDs,
                                                     adUnitID: adUnitID,
@@ -72,7 +72,7 @@ private extension TSAdManager {
             .collect()
             .sink { _ in
                 let sortedKeys = results.keys.sorted(by: <)
-                var orderedResults: [GADCustomNativeAd] = []
+                var orderedResults: [CustomNativeAd] = []
                 sortedKeys.forEach { key in
                     if let banner = results[key] {
                         orderedResults.append(banner)
@@ -95,7 +95,7 @@ private extension TSAdManager {
             .store(in: &cancellables)
     }
     
-    func loadGoogleAdMob(with params: TSAdMobParams, completion: @escaping (Result<GADBannerView, Error>) -> ()) {
+    func loadGoogleAdMob(with params: TSAdMobParams, completion: @escaping (Result<BannerView, Error>) -> ()) {
         adMobLoader.load(rootViewController: params.parentViewController,
                          adUnitID: params.adUnitID,
                          adDimension: params.adDimension)

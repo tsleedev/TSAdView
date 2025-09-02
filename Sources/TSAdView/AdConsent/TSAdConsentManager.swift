@@ -21,18 +21,18 @@ public class TSAdConsentManager {
     }
     
     public var canRequestAds: Bool {
-        return UMPConsentInformation.sharedInstance.canRequestAds
+        return ConsentInformation.shared.canRequestAds
     }
     
     public var isPrivacyOptionsRequired: Bool {
-        return UMPConsentInformation.sharedInstance.privacyOptionsRequirementStatus == .required
+        return ConsentInformation.shared.privacyOptionsRequirementStatus == .required
     }
     
     // Closure-based API
     public func requestConsentUpdate(from viewController: UIViewController, completion: @escaping (Error?) -> Void) {
         let parameters = createParameters()
         
-        UMPConsentInformation.sharedInstance.requestConsentInfoUpdate(with: parameters) { [weak self] requestConsentError in
+        ConsentInformation.shared.requestConsentInfoUpdate(with: parameters) { [weak self] requestConsentError in
             guard requestConsentError == nil else {
                 completion(requestConsentError)
                 return
@@ -47,7 +47,7 @@ public class TSAdConsentManager {
         let parameters = createParameters()
         
         try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
-            UMPConsentInformation.sharedInstance.requestConsentInfoUpdate(with: parameters) { [weak self] requestConsentError in
+            ConsentInformation.shared.requestConsentInfoUpdate(with: parameters) { [weak self] requestConsentError in
                 if let error = requestConsentError {
                     continuation.resume(throwing: error)
                     return
@@ -64,11 +64,11 @@ public class TSAdConsentManager {
         }
     }
     
-    private func createParameters() -> UMPRequestParameters {
-        let parameters = UMPRequestParameters()
+    private func createParameters() -> RequestParameters {
+        let parameters = RequestParameters()
         
         if let settings = debugSettings {
-            let debugSettings = UMPDebugSettings()
+            let debugSettings = DebugSettings()
             debugSettings.testDeviceIdentifiers = settings.testDeviceIdentifiers
             debugSettings.geography = settings.geography
             parameters.debugSettings = debugSettings
@@ -78,7 +78,7 @@ public class TSAdConsentManager {
     }
     
     private func showConsentFormIfRequired(from viewController: UIViewController, completion: @escaping (Error?) -> Void) {
-        UMPConsentForm.loadAndPresentIfRequired(from: viewController) { loadAndPresentError in
+        ConsentForm.loadAndPresentIfRequired(from: viewController) { loadAndPresentError in
             completion(loadAndPresentError)
             
             if loadAndPresentError == nil {
@@ -89,13 +89,13 @@ public class TSAdConsentManager {
     
     // Closure-based API
     public func presentPrivacyOptionsForm(from viewController: UIViewController, completion: @escaping (Error?) -> Void) {
-        UMPConsentForm.presentPrivacyOptionsForm(from: viewController, completionHandler: completion)
+        ConsentForm.presentPrivacyOptionsForm(from: viewController, completionHandler: completion)
     }
     
     // Async/await API
     public func presentPrivacyOptionsForm(from viewController: UIViewController) async throws {
         try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
-            UMPConsentForm.presentPrivacyOptionsForm(from: viewController) { error in
+            ConsentForm.presentPrivacyOptionsForm(from: viewController) { error in
                 if let error = error {
                     continuation.resume(throwing: error)
                 } else {
@@ -106,6 +106,6 @@ public class TSAdConsentManager {
     }
     
     public func resetConsentInformation() {
-        UMPConsentInformation.sharedInstance.reset()
+        ConsentInformation.shared.reset()
     }
 }
