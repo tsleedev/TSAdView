@@ -32,7 +32,7 @@ private extension AdPopupViewController {
                                        adDimension: CGSize(width: 300, height: 400)))
         ]
 
-        let adView = TSAdView(with: types, adManagerViewBuilder: { [weak self] ads, adServiceType in
+        let adView = TSAdView(with: types, adManagerViewBuilder: { [weak self] ads in
             self?.closeButton.isHidden = true
             return UIImageView(image: ads.first?.image(forKey: "image")?.image)
         })
@@ -49,9 +49,9 @@ private extension AdPopupViewController {
 
         Task {
             do {
-                _ = try await adView.loadAd()
+                let (_, adType) = try await adView.loadAd()
                 closeButton.isHidden = false
-                print("AdPopupViewController ad loaded successfully")
+                print("AdPopupViewController ad loaded successfully: \(adType)")
             } catch {
                 print("AdPopupViewController onAdLoadFailure: \(error.localizedDescription)")
                 presentingViewController?.dismiss(animated: true)

@@ -24,7 +24,7 @@ A Swift library for loading ads from multiple ad networks (Google Ad Manager, Ad
 Add the following to your `Package.swift` file:
 
 ```swift
-.package(url: "https://github.com/tsleedev/TSAdView.git", .upToNextMajor(from: "1.0.0"))
+.package(url: "https://github.com/tsleedev/TSAdView.git", .upToNextMajor(from: "1.1.0"))
 ```
 
 Or add it through Xcode: File → Add Package Dependencies → Enter the repository URL.
@@ -49,7 +49,7 @@ func loadAd() {
                                    adDimension: CGSize(width: 300, height: 250)))
     ]
 
-    let adView = TSAdView(with: types, adManagerViewBuilder: { ads, adServiceType in
+    let adView = TSAdView(with: types, adManagerViewBuilder: { ads in
         // Return custom UIView for Google Ad Manager
         // For AdMob, this closure is not called (BannerView is used automatically)
         return UIImageView(image: ads.first?.image(forKey: "image")?.image)
@@ -68,8 +68,8 @@ func loadAd() {
     // Load ad using async/await
     Task {
         do {
-            _ = try await adView.loadAd()
-            print("Ad loaded successfully")
+            let (_, adType) = try await adView.loadAd()
+            print("Ad loaded successfully: \(adType)")
         } catch {
             print("Failed to load ad: \(error.localizedDescription)")
         }
@@ -91,11 +91,11 @@ struct ContentView: View {
                                                adUnitIDs: ["Your adUnitID"])),
                 .googleAdMob(params: .init(adDimension: CGSize(width: 300, height: 250)))
             ],
-            adManagerViewBuilder: { ads, adServiceType in
+            adManagerViewBuilder: { ads in
                 return UIImageView(image: ads.first?.image(forKey: "image")?.image)
             },
-            onAdLoadSuccess: {
-                print("Ad loaded successfully")
+            onAdLoadSuccess: { adType in
+                print("Ad loaded successfully: \(adType)")
             },
             onAdLoadFailure: { error in
                 print("Failed to load ad: \(error.localizedDescription)")

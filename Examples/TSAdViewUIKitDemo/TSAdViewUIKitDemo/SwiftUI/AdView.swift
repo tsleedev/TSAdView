@@ -16,11 +16,11 @@ struct AdView: View {
                                                adUnitIDs: ["Your adUnitID"])),
                 .googleAdMob(params: .init(adDimension: CGSize(width: 300, height: 400)))
             ],
-            adManagerViewBuilder: { ads, adServiceType in
+            adManagerViewBuilder: { ads in
                 return UIImageView(image: ads.first?.image(forKey: "image")?.image)
             },
-            onAdLoadSuccess: {
-                print("AdView onAdLoadSuccess")
+            onAdLoadSuccess: { adType in
+                print("AdView onAdLoadSuccess: \(adType)")
             },
             onAdLoadFailure: { error in
                 print("AdView onAdLoadFailure: \(error.localizedDescription)")

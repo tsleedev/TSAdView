@@ -63,7 +63,7 @@ private extension AdMultiViewController {
                                        adDimension: CGSize(width: UIScreen.main.bounds.width, height: 50)))
         ]
 
-        let adView = TSAdView(with: types, adManagerViewBuilder: { ads, adServiceType in
+        let adView = TSAdView(with: types, adManagerViewBuilder: { ads in
             let customNativeAd = ads.first
             completion(customNativeAd)
             return UIImageView(image: customNativeAd?.image(forKey: "image")?.image)
@@ -79,8 +79,8 @@ private extension AdMultiViewController {
         ])
 
         do {
-            _ = try await adView.loadAd()
-            print("Ad loaded successfully")
+            let (_, adType) = try await adView.loadAd()
+            print("Ad loaded successfully: \(adType)")
         } catch {
             print("Failed to load ad: \(error.localizedDescription)")
             completion(nil)

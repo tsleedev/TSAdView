@@ -33,7 +33,7 @@ private extension AdManagerLottieViewController {
                                        adDimension: CGSize(width: 200, height: 100)))
         ]
 
-        let adView = TSAdView(with: types, adManagerViewBuilder: { [weak self] ads, adServiceType in
+        let adView = TSAdView(with: types, adManagerViewBuilder: { [weak self] ads in
             guard
                 let self = self,
                 let ad = ads.first
@@ -52,8 +52,8 @@ private extension AdManagerLottieViewController {
 
         Task {
             do {
-                _ = try await adView.loadAd()
-                print("AdManagerLottieViewController ad loaded successfully")
+                let (_, adType) = try await adView.loadAd()
+                print("AdManagerLottieViewController ad loaded successfully: \(adType)")
             } catch {
                 print("AdManagerLottieViewController onAdLoadFailure: \(error.localizedDescription)")
             }
