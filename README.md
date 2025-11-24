@@ -9,6 +9,7 @@ A Swift library for loading ads from multiple ad networks (Google Ad Manager, Ad
 - GDPR consent management (UserMessagingPlatform)
 - UIKit and SwiftUI support
 - Modern Swift Concurrency (async/await)
+- Customizable loading indicator
 - Swift 6 ready
 
 ## Requirements
@@ -24,7 +25,7 @@ A Swift library for loading ads from multiple ad networks (Google Ad Manager, Ad
 Add the following to your `Package.swift` file:
 
 ```swift
-.package(url: "https://github.com/tsleedev/TSAdView.git", .upToNextMajor(from: "1.1.0"))
+.package(url: "https://github.com/tsleedev/TSAdView.git", .upToNextMajor(from: "1.2.0"))
 ```
 
 Or add it through Xcode: File → Add Package Dependencies → Enter the repository URL.
@@ -104,6 +105,27 @@ struct ContentView: View {
         .frame(width: 300, height: 250)
     }
 }
+```
+
+### Loading Indicator Customization
+
+You can customize the loading indicator style:
+
+```swift
+// No indicator
+let adView = TSAdView(with: types, loadingIndicatorStyle: .none)
+
+// Default indicator (UIActivityIndicatorView)
+let adView = TSAdView(with: types, loadingIndicatorStyle: .default)
+
+// Custom color
+let adView = TSAdView(with: types, loadingIndicatorStyle: .color(.red))
+
+// Custom view
+let adView = TSAdView(with: types, loadingIndicatorStyle: .custom {
+    let spinner = MyCustomSpinner()
+    return spinner
+})
 ```
 
 ## Example

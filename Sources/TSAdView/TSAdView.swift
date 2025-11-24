@@ -16,21 +16,27 @@ public class TSAdView: UIView {
     /// - Returns: A custom UIView to display the ad, or nil if the view cannot be created.
     public typealias AdManagerViewBuilder = ([CustomNativeAd]) -> UIView?
 
-    private let loadingIndicator: UIActivityIndicatorView = {
-        let indicatorView = UIActivityIndicatorView(style: .medium)
-        indicatorView.hidesWhenStopped = true
-        indicatorView.translatesAutoresizingMaskIntoConstraints = false
-        return indicatorView
-    }()
+    private var loadingIndicatorView: UIView?
 
     private let adCoordinator = TSAdCoordinator()
     private let types: [TSAdServiceType]
     private let adManagerViewBuilder: AdManagerViewBuilder?
+    private let loadingIndicatorStyle: LoadingIndicatorStyle
 
     /// The color of the loading indicator.
+    @available(*, deprecated, message: "Use loadingIndicatorStyle parameter in init instead")
     public var indicatorColor: UIColor? {
-        get { loadingIndicator.color }
-        set { loadingIndicator.color = newValue }
+        get {
+            if let activityIndicator = loadingIndicatorView as? UIActivityIndicatorView {
+                return activityIndicator.color
+            }
+            return nil
+        }
+        set {
+            if let activityIndicator = loadingIndicatorView as? UIActivityIndicatorView {
+                activityIndicator.color = newValue
+            }
+        }
     }
 
     /// Creates a new TSAdView instance.
@@ -38,9 +44,15 @@ public class TSAdView: UIView {
     ///   - types: Array of ad service types to try loading, in order of priority.
     ///   - adManagerViewBuilder: A closure that builds a custom view for Google Ad Manager ads.
     ///                           Required if using Google Ad Manager, ignored for AdMob.
-    public init(with types: [TSAdServiceType], adManagerViewBuilder: AdManagerViewBuilder? = nil) {
+    ///   - loadingIndicatorStyle: The style of loading indicator to display. Defaults to `.default`.
+    public init(
+        with types: [TSAdServiceType],
+        adManagerViewBuilder: AdManagerViewBuilder? = nil,
+        loadingIndicatorStyle: LoadingIndicatorStyle = .default
+    ) {
         self.types = types
         self.adManagerViewBuilder = adManagerViewBuilder
+        self.loadingIndicatorStyle = loadingIndicatorStyle
         super.init(frame: .zero)
         setupViews()
     }
@@ -54,7 +66,7 @@ public class TSAdView: UIView {
     /// - Throws: An error if all ad types fail to load or if AdManagerViewBuilder returns nil.
     @MainActor
     public func loadAd() async throws -> (UIView, TSAdServiceType) {
-        defer { loadingIndicator.stopAnimating() }
+        defer { stopLoadingIndicator() }
 
         let result = try await adCoordinator.loadAd(with: types)
 
@@ -81,12 +93,57 @@ public class TSAdView: UIView {
 // MARK: - Setup
 private extension TSAdView {
     func setupViews() {
-        addSubview(loadingIndicator)
-        NSLayoutConstraint.activate([
-            loadingIndicator.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            loadingIndicator.centerYAnchor.constraint(equalTo: self.centerYAnchor)
-        ])
-        loadingIndicator.startAnimating()
+        setupLoadingIndicator()
+    }
+
+    func setupLoadingIndicator() {
+        switch loadingIndicatorStyle {
+        case .none:
+            loadingIndicatorView = nil
+
+        case .default:
+            let indicatorView = UIActivityIndicatorView(style: .medium)
+            indicatorView.hidesWhenStopped = true
+            indicatorView.translatesAutoresizingMaskIntoConstraints = false
+            addSubview(indicatorView)
+            NSLayoutConstraint.activate([
+                indicatorView.centerXAnchor.constraint(equalTo: centerXAnchor),
+                indicatorView.centerYAnchor.constraint(equalTo: centerYAnchor)
+            ])
+            indicatorView.startAnimating()
+            loadingIndicatorView = indicatorView
+
+        case .color(let color):
+            let indicatorView = UIActivityIndicatorView(style: .medium)
+            indicatorView.hidesWhenStopped = true
+            indicatorView.color = color
+            indicatorView.translatesAutoresizingMaskIntoConstraints = false
+            addSubview(indicatorView)
+            NSLayoutConstraint.activate([
+                indicatorView.centerXAnchor.constraint(equalTo: centerXAnchor),
+                indicatorView.centerYAnchor.constraint(equalTo: centerYAnchor)
+            ])
+            indicatorView.startAnimating()
+            loadingIndicatorView = indicatorView
+
+        case .custom(let viewBuilder):
+            let customView = viewBuilder()
+            customView.translatesAutoresizingMaskIntoConstraints = false
+            addSubview(customView)
+            NSLayoutConstraint.activate([
+                customView.centerXAnchor.constraint(equalTo: centerXAnchor),
+                customView.centerYAnchor.constraint(equalTo: centerYAnchor)
+            ])
+            loadingIndicatorView = customView
+        }
+    }
+
+    func stopLoadingIndicator() {
+        if let activityIndicator = loadingIndicatorView as? UIActivityIndicatorView {
+            activityIndicator.stopAnimating()
+        }
+        loadingIndicatorView?.removeFromSuperview()
+        loadingIndicatorView = nil
     }
 
     func displayAdView(_ adView: UIView) {
