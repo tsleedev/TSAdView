@@ -12,16 +12,18 @@ struct AdView: View {
     var body: some View {
         TSAdViewSwiftUI(
             adServiceTypes: [
-                .googleAdManager(params: .init(adFormatIDs: [/*@START_MENU_TOKEN@*/"Your adFormatIDs"/*@END_MENU_TOKEN@*/],
-                                               adUnitIDs: [/*@START_MENU_TOKEN@*/"Your adUnitID"/*@END_MENU_TOKEN@*/])),
+                .googleAdManager(params: .init(adFormatIDs: ["Your adFormatIDs"],
+                                               adUnitIDs: ["Your adUnitID"])),
                 .googleAdMob(params: .init(adDimension: CGSize(width: 300, height: 400)))
-            ], adViewProvider: { ads, adServiceType in
-                // Create and return your custom UIView here based on the `ad`.
-                // Note: This closure is specifically designed for AdManager.
-                // For AdMob, you don't need to provide a custom UIView.
+            ],
+            adViewProvider: { ads, adServiceType in
                 return UIImageView(image: ads.first?.image(forKey: "image")?.image)
-            }, onAdLoadFailure: {
-                print("AdView onAdLoadFailure")
+            },
+            onAdLoadSuccess: {
+                print("AdView onAdLoadSuccess")
+            },
+            onAdLoadFailure: { error in
+                print("AdView onAdLoadFailure: \(error.localizedDescription)")
             }
         )
         .frame(width: 300, height: 400)

@@ -1,67 +1,114 @@
 # TSAdView
 
-This library was created to help you load ads from multiple Ad networks with ease.
+A Swift library for loading ads from multiple ad networks (Google Ad Manager, AdMob) with ease using modern async/await patterns.
 
-## Example
+## Features
 
-To run the example project, clone the repo, and run pod install from the Example directory first.
+- Support for Google Ad Manager and Google AdMob
+- Automatic fallback to next ad network on failure
+- GDPR consent management (UserMessagingPlatform)
+- UIKit and SwiftUI support
+- Modern Swift Concurrency (async/await)
+- Swift 6 ready
 
 ## Requirements
+
 - iOS 13.0+
-- Xcode 11+
+- Xcode 16+
+- Swift 5.9+
 
 ## Installation
 
 ### Swift Package Manager
 
-To use TSAdView with the Swift Package Manager, add the following to your Package.swift file.
+Add the following to your `Package.swift` file:
 
 ```swift
-.package(url: "https://github.com/tsleedev/TSAdView.git", .upToNextMajor(from: "0.1.0"))
+.package(url: "https://github.com/tsleedev/TSAdView.git", .upToNextMajor(from: "1.0.0"))
 ```
+
+Or add it through Xcode: File → Add Package Dependencies → Enter the repository URL.
 
 ## Usage
 
-### Import the TSAdView module
-
-Add the following import to the top of the file:
+### Import
 
 ```swift
 import TSAdView
 ```
 
-### Initialize and load the Ad view
-
-Here's an example for how to use it:
+### UIKit
 
 ```swift
 func loadAd() {
-let types: [TSAdServiceType] = [
- func adLoad() {
     let types: [TSAdServiceType] = [
         .googleAdManager(params: .init(viewController: self,
-                                       adUnitID: /*@START_MENU_TOKEN@*/"Your adUnitID"/*@END_MENU_TOKEN@*/)),
+                                       adFormatIDs: ["Your adFormatID"],
+                                       adUnitIDs: ["Your adUnitID"])),
         .googleAdMob(params: .init(viewController: self,
-//                                       adUnitID: /*@START_MENU_TOKEN@*/"Your adUnitID"/*@END_MENU_TOKEN@*/,
-                                   adDimension: CGSize(width: 300, height: 400)))
+                                   adDimension: CGSize(width: 300, height: 250)))
     ]
-    let adView = TSAdView(with: types) { ad in
-        // Create and return your custom UIView here based on the `ad`.
-        // Note: This closure is specifically designed for AdManager.
-        // For AdMob, you don't need to provide a custom UIView.
-        return UIImageView(image: ad.image(forKey: "image")?.image)
+
+    let adView = TSAdView(with: types) { ads, adServiceType in
+        // Return custom UIView for Google Ad Manager
+        // For AdMob, this closure is not called (BannerView is used automatically)
+        return UIImageView(image: ads.first?.image(forKey: "image")?.image)
     }
-    adView.load()
-    adViewContainer.addSubview(adView)
+
+    // Add to view hierarchy
+    view.addSubview(adView)
     adView.translatesAutoresizingMaskIntoConstraints = false
     NSLayoutConstraint.activate([
-        adView.topAnchor.constraint(equalTo: adViewContainer.topAnchor),
-        adView.bottomAnchor.constraint(equalTo: adViewContainer.bottomAnchor),
-        adView.leadingAnchor.constraint(equalTo: adViewContainer.leadingAnchor),
-        adView.trailingAnchor.constraint(equalTo: adViewContainer.trailingAnchor)
+        adView.topAnchor.constraint(equalTo: view.topAnchor),
+        adView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+        adView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+        adView.heightAnchor.constraint(equalToConstant: 250)
     ])
+
+    // Load ad using async/await
+    Task {
+        do {
+            _ = try await adView.loadAd()
+            print("Ad loaded successfully")
+        } catch {
+            print("Failed to load ad: \(error.localizedDescription)")
+        }
+    }
 }
 ```
+
+### SwiftUI
+
+```swift
+import TSAdView
+import SwiftUI
+
+struct ContentView: View {
+    var body: some View {
+        TSAdViewSwiftUI(
+            adServiceTypes: [
+                .googleAdManager(params: .init(adFormatIDs: ["Your adFormatID"],
+                                               adUnitIDs: ["Your adUnitID"])),
+                .googleAdMob(params: .init(adDimension: CGSize(width: 300, height: 250)))
+            ],
+            adViewProvider: { ads, adServiceType in
+                return UIImageView(image: ads.first?.image(forKey: "image")?.image)
+            },
+            onAdLoadSuccess: {
+                print("Ad loaded successfully")
+            },
+            onAdLoadFailure: { error in
+                print("Failed to load ad: \(error.localizedDescription)")
+            }
+        )
+        .frame(width: 300, height: 250)
+    }
+}
+```
+
+## Example
+
+To run the example project, open `Examples/TSAdViewUIKitDemo/TSAdViewUIKitDemo.xcodeproj` in Xcode.
 
 ## Author
 

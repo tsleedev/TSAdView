@@ -12,52 +12,49 @@ import GoogleMobileAds
 class AdMultiViewController: UIViewController {
     @IBOutlet private weak var adViewContainer1: UIView!
     @IBOutlet private weak var adViewContainer2: UIView!
-    
+
     private var customNativeAd1: CustomNativeAd?
     private var customNativeAd2: CustomNativeAd?
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        requestConsentAndLoadAds()
+
+        Task {
+            await requestConsentAndLoadAds()
+        }
     }
 }
 
 // MARK: - AdLoad
 private extension AdMultiViewController {
-    func requestConsentAndLoadAds() {
-        if TSAdConsentManager.shared.canRequestAds {
-            self.loadAllAds()
-        } else {
-            TSAdConsentManager.shared.requestConsentUpdate(from: self) { [weak self] error in
-                guard let self = self else { return }
-                
-                if let error = error {
-                    print("Failed to obtain consent: \(error.localizedDescription)")
-                    // Handle error (e.g., show an alert to the user)
-                    return
-                }
-                
-                if TSAdConsentManager.shared.canRequestAds {
-                    self.loadAllAds()
-                } else {
-                    print("Cannot request ads due to consent status")
-                    // Handle the case where ads cannot be shown
-                }
+    func requestConsentAndLoadAds() async {
+        do {
+            if !TSAdConsentManager.shared.canRequestAds {
+                try await TSAdConsentManager.shared.requestConsentUpdate(from: self)
             }
+
+            guard TSAdConsentManager.shared.canRequestAds else {
+                print("Cannot request ads due to consent status")
+                return
+            }
+
+            await loadAllAds()
+        } catch {
+            print("Failed to obtain consent: \(error.localizedDescription)")
         }
     }
-    
-    func loadAllAds() {
-        loadAd(for: adViewContainer1, completion: { [weak self] customNativeAd in
+
+    func loadAllAds() async {
+        async let ad1: Void = loadAd(for: adViewContainer1) { [weak self] customNativeAd in
             self?.customNativeAd1 = customNativeAd
-        })
-        loadAd(for: adViewContainer2, completion: { [weak self] customNativeAd in
+        }
+        async let ad2: Void = loadAd(for: adViewContainer2) { [weak self] customNativeAd in
             self?.customNativeAd2 = customNativeAd
-        })
+        }
+        _ = await (ad1, ad2)
     }
-    
-    func loadAd(for container: UIView, completion: @escaping (CustomNativeAd?) -> Void) {
+
+    func loadAd(for container: UIView, completion: @escaping (CustomNativeAd?) -> Void) async {
         let types: [TSAdServiceType] = [
             .googleAdManager(params: .init(viewController: self,
                                            adFormatIDs: ["Your adFormatIDs"],
@@ -65,19 +62,13 @@ private extension AdMultiViewController {
             .googleAdMob(params: .init(viewController: self,
                                        adDimension: CGSize(width: UIScreen.main.bounds.width, height: 50)))
         ]
-        
+
         let adView = TSAdView(with: types, adViewProvider: { ads, adServiceType in
             let customNativeAd = ads.first
             completion(customNativeAd)
             return UIImageView(image: customNativeAd?.image(forKey: "image")?.image)
-        }, onAdMobLoadSuccess: {
-            print("Ad loaded successfully")
-        }, onAdLoadFailure: {
-            print("Failed to load ad")
-            completion(nil)
         })
-        
-        adView.loadAd()
+
         container.addSubview(adView)
         adView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -86,6 +77,14 @@ private extension AdMultiViewController {
             adView.leadingAnchor.constraint(equalTo: container.leadingAnchor),
             adView.trailingAnchor.constraint(equalTo: container.trailingAnchor)
         ])
+
+        do {
+            _ = try await adView.loadAd()
+            print("Ad loaded successfully")
+        } catch {
+            print("Failed to load ad: \(error.localizedDescription)")
+            completion(nil)
+        }
     }
 }
 
