@@ -33,13 +33,13 @@ private extension AdManagerLottieViewController {
                                        adDimension: CGSize(width: 200, height: 100)))
         ]
 
-        let adView = TSAdView(with: types) { [weak self] ads, adServiceType in
+        let adView = TSAdView(with: types, adManagerViewBuilder: { [weak self] ads, adServiceType in
             guard
                 let self = self,
                 let ad = ads.first
             else { return nil }
             return self.drawAd(with: ad)
-        }
+        })
 
         adViewContainer.addSubview(adView)
         adView.translatesAutoresizingMaskIntoConstraints = false

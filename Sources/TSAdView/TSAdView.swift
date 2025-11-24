@@ -9,7 +9,7 @@ import UIKit
 import GoogleMobileAds
 
 public class TSAdView: UIView {
-    public typealias AdViewProvider = ([CustomNativeAd], TSAdServiceType) -> UIView?
+    public typealias AdManagerViewBuilder = ([CustomNativeAd], TSAdServiceType) -> UIView?
 
     private let loadingIndicator: UIActivityIndicatorView = {
         let indicatorView = UIActivityIndicatorView(style: .medium)
@@ -20,16 +20,16 @@ public class TSAdView: UIView {
 
     private let adCoordinator = TSAdCoordinator()
     private let types: [TSAdServiceType]
-    private let adViewProvider: AdViewProvider?
+    private let adManagerViewBuilder: AdManagerViewBuilder?
 
     public var indicatorColor: UIColor? {
         get { loadingIndicator.color }
         set { loadingIndicator.color = newValue }
     }
 
-    public init(with types: [TSAdServiceType], adViewProvider: AdViewProvider? = nil) {
+    public init(with types: [TSAdServiceType], adManagerViewBuilder: AdManagerViewBuilder? = nil) {
         self.types = types
-        self.adViewProvider = adViewProvider
+        self.adManagerViewBuilder = adManagerViewBuilder
         super.init(frame: .zero)
         setupViews()
     }
@@ -47,8 +47,8 @@ public class TSAdView: UIView {
         let adView: UIView
         switch result {
         case .googleAdManager(let ads, let type):
-            guard let customView = adViewProvider?(ads, type) else {
-                throw NSError(domain: "TSAdView", code: 0, userInfo: [NSLocalizedDescriptionKey: "AdViewProvider returned nil"])
+            guard let customView = adManagerViewBuilder?(ads, type) else {
+                throw NSError(domain: "TSAdView", code: 0, userInfo: [NSLocalizedDescriptionKey: "AdManagerViewBuilder returned nil"])
             }
             adView = customView
 

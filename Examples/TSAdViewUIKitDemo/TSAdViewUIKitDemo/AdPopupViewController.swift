@@ -32,7 +32,7 @@ private extension AdPopupViewController {
                                        adDimension: CGSize(width: 300, height: 400)))
         ]
 
-        let adView = TSAdView(with: types, adViewProvider: { [weak self] ads, adServiceType in
+        let adView = TSAdView(with: types, adManagerViewBuilder: { [weak self] ads, adServiceType in
             self?.closeButton.isHidden = true
             return UIImageView(image: ads.first?.image(forKey: "image")?.image)
         })

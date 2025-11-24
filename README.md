@@ -49,11 +49,11 @@ func loadAd() {
                                    adDimension: CGSize(width: 300, height: 250)))
     ]
 
-    let adView = TSAdView(with: types) { ads, adServiceType in
+    let adView = TSAdView(with: types, adManagerViewBuilder: { ads, adServiceType in
         // Return custom UIView for Google Ad Manager
         // For AdMob, this closure is not called (BannerView is used automatically)
         return UIImageView(image: ads.first?.image(forKey: "image")?.image)
-    }
+    })
 
     // Add to view hierarchy
     view.addSubview(adView)
@@ -91,7 +91,7 @@ struct ContentView: View {
                                                adUnitIDs: ["Your adUnitID"])),
                 .googleAdMob(params: .init(adDimension: CGSize(width: 300, height: 250)))
             ],
-            adViewProvider: { ads, adServiceType in
+            adManagerViewBuilder: { ads, adServiceType in
                 return UIImageView(image: ads.first?.image(forKey: "image")?.image)
             },
             onAdLoadSuccess: {

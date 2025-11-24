@@ -16,7 +16,7 @@ struct AdView: View {
                                                adUnitIDs: ["Your adUnitID"])),
                 .googleAdMob(params: .init(adDimension: CGSize(width: 300, height: 400)))
             ],
-            adViewProvider: { ads, adServiceType in
+            adManagerViewBuilder: { ads, adServiceType in
                 return UIImageView(image: ads.first?.image(forKey: "image")?.image)
             },
             onAdLoadSuccess: {
