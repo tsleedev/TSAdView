@@ -6,10 +6,12 @@
 //
 
 import UIKit
+import GoogleMobileAds
 
 public enum TSAdServiceType {
     case googleAdManager(params: TSAdManagerParams)
     case googleAdMob(params: TSAdMobParams)
+    case googleAdMobNative(params: TSAdMobNativeParams)
 }
 
 public struct TSAdManagerParams {
@@ -37,7 +39,7 @@ public struct TSAdMobParams {
     let adUnitID: String
     let adDimension: CGSize
     public let userInfo: [String: Any]?
-    
+
     public init(viewController: UIViewController = UIApplication.topViewController(),
                 adUnitID: String = "ca-app-pub-3940256099942544/2934735716",
                 adDimension: CGSize = CGSize(width: 320, height: 50),
@@ -45,6 +47,23 @@ public struct TSAdMobParams {
         self.parentViewController = viewController
         self.adUnitID = adUnitID
         self.adDimension = adDimension
+        self.userInfo = userInfo
+    }
+}
+
+public struct TSAdMobNativeParams {
+    let parentViewController: UIViewController
+    let adUnitID: String
+    let mediaAspectRatio: MediaAspectRatio
+    public let userInfo: [String: Any]?
+
+    public init(viewController: UIViewController = UIApplication.topViewController(),
+                adUnitID: String = "ca-app-pub-3940256099942544/3986624511",
+                mediaAspectRatio: MediaAspectRatio = .portrait,
+                userInfo: [String: Any]? = nil) {
+        self.parentViewController = viewController
+        self.adUnitID = adUnitID
+        self.mediaAspectRatio = mediaAspectRatio
         self.userInfo = userInfo
     }
 }

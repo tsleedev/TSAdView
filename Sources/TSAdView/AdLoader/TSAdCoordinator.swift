@@ -11,11 +11,13 @@ import GoogleMobileAds
 public enum TSAdResult {
     case googleAdManager(ads: [CustomNativeAd], type: TSAdServiceType)
     case googleAdMob(bannerView: BannerView, type: TSAdServiceType)
+    case googleAdMobNative(nativeAd: NativeAd, type: TSAdServiceType)
 }
 
 final class TSAdCoordinator {
     private var googleAdManagerLoaders: [TSAdManagerLoader] = []
     private var adMobLoader: TSAdMobLoader?
+    private var adMobNativeLoader: TSAdMobNativeLoader?
 
     func loadAd(with types: [TSAdServiceType]) async throws -> TSAdResult {
         var lastError: Error?
@@ -30,6 +32,10 @@ final class TSAdCoordinator {
                 case .googleAdMob(let params):
                     let bannerView = try await loadGoogleAdMob(with: params)
                     return .googleAdMob(bannerView: bannerView, type: type)
+
+                case .googleAdMobNative(let params):
+                    let nativeAd = try await loadGoogleAdMobNative(with: params)
+                    return .googleAdMobNative(nativeAd: nativeAd, type: type)
                 }
             } catch {
                 print("TSAdCoordinator: Failed to load \(type), trying next...")
@@ -80,6 +86,18 @@ private extension TSAdCoordinator {
             rootViewController: params.parentViewController,
             adUnitID: params.adUnitID,
             adDimension: params.adDimension
+        )
+    }
+
+    @MainActor
+    func loadGoogleAdMobNative(with params: TSAdMobNativeParams) async throws -> NativeAd {
+        let loader = TSAdMobNativeLoader()
+        adMobNativeLoader = loader
+
+        return try await loader.load(
+            rootViewController: params.parentViewController,
+            adUnitID: params.adUnitID,
+            mediaAspectRatio: params.mediaAspectRatio
         )
     }
 }

@@ -10,7 +10,6 @@ import GoogleMobileAds
 
 @MainActor
 final class TSAdMobLoader: NSObject {
-    private static var isAdMobStarted = false
     private var bannerView: BannerView?
     private var continuation: CheckedContinuation<BannerView, Error>?
 
@@ -36,7 +35,7 @@ final class TSAdMobLoader: NSObject {
                         return
                     }
 
-                    self.startAdMobIfNeeded()
+                    TSAdMobInitializer.startIfNeeded()
                     bannerView.load(Request())
                 } catch {
                     self.resumeWithError(error)
@@ -81,14 +80,5 @@ extension TSAdMobLoader: BannerViewDelegate {
 
     func bannerViewDidDismissScreen(_ bannerView: BannerView) {
         print(String(describing: type(of: self)) + " bannerViewDidDismissScreen")
-    }
-}
-
-// MARK: - Helper
-private extension TSAdMobLoader {
-    func startAdMobIfNeeded() {
-        guard !TSAdMobLoader.isAdMobStarted else { return }
-        MobileAds.shared.start(completionHandler: nil)
-        TSAdMobLoader.isAdMobStarted = true
     }
 }
