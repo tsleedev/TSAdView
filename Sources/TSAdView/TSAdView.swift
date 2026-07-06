@@ -79,27 +79,44 @@ public class TSAdView: UIView {
     }
 
     /// Loads and displays an ad asynchronously.
-    /// - Returns: The UIView displaying the ad (either custom view for Ad Manager or BannerView for AdMob).
-    /// - Throws: An error if all ad types fail to load or if AdManagerViewBuilder returns nil.
+    /// Types are tried in order. A type is skipped not only when loading fails,
+    /// but also when its view builder returns nil (e.g. the app decides the loaded
+    /// ad's assets are insufficient to render) — the next type is then requested.
+    /// - Returns: The UIView displaying the ad (either custom view for Ad Manager,
+    ///            BannerView for AdMob, or NativeAdView for AdMob native).
+    /// - Throws: An error if all ad types fail to load or be rendered.
     @MainActor
     public func loadAd() async throws -> (UIView, TSAdServiceType) {
         defer { stopLoadingIndicator() }
 
-        let result = try await adCoordinator.loadAd(with: types)
+        var lastError: Error?
+        for type in types {
+            do {
+                let result = try await adCoordinator.loadAd(with: [type])
+                let (adView, adType) = try makeAdView(from: result)
+                displayAdView(adView)
+                return (adView, adType)
+            } catch {
+                print("TSAdView: Failed to load or render \(type), trying next...")
+                lastError = error
+                continue
+            }
+        }
 
-        let adView: UIView
-        let adType: TSAdServiceType
+        throw lastError ?? NSError(domain: "TSAdView", code: 0, userInfo: [NSLocalizedDescriptionKey: "No ad types provided"])
+    }
+
+    @MainActor
+    private func makeAdView(from result: TSAdResult) throws -> (UIView, TSAdServiceType) {
         switch result {
         case .googleAdManager(let ads, let type):
             guard let customView = adManagerViewBuilder?(ads) else {
                 throw NSError(domain: "TSAdView", code: 0, userInfo: [NSLocalizedDescriptionKey: "AdManagerViewBuilder returned nil"])
             }
-            adView = customView
-            adType = type
+            return (customView, type)
 
         case .googleAdMob(let bannerView, let type):
-            adView = bannerView
-            adType = type
+            return (bannerView, type)
 
         case .googleAdMobNative(let nativeAd, let type):
             guard let nativeAdView = adMobNativeViewBuilder?(nativeAd) else {
@@ -110,12 +127,8 @@ public class TSAdView: UIView {
                 nativeAdView.nativeAd = nativeAd
             }
             retainedNativeAd = nativeAd
-            adView = nativeAdView
-            adType = type
+            return (nativeAdView, type)
         }
-
-        displayAdView(adView)
-        return (adView, adType)
     }
 }
 
